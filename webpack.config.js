@@ -1,5 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
   entry: './src/main.js',
@@ -8,6 +10,9 @@ module.exports = {
     publicPath: '/dist/',
     filename: 'build.js'
   },
+  plugins: [
+    new VueLoaderPlugin()
+  ],
   module: {
     rules: [
       {
@@ -63,7 +68,7 @@ module.exports = {
         options: {
           formatter: require('eslint-friendly-formatter') // 指定错误报告的格式规范
         },
-        exclude: /node_modules/
+        // exclude: /node_modules/
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
@@ -103,10 +108,9 @@ if (process.env.NODE_ENV === 'production') {
         NODE_ENV: '"production"'
       }
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      compress: {
-        warnings: false
+    new UglifyJsPlugin({
+      uglifyOptions: {        
+        ecma: 8      
       }
     }),
     new webpack.LoaderOptionsPlugin({
