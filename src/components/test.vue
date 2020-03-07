@@ -1,6 +1,9 @@
 <template>
   <div>
-    <el-tag @click="olClick">你好</el-tag>
+    <el-tag @click="getGoodsList">获取数据</el-tag>
+    <el-tag @click="postGoodsList">提交数据</el-tag>
+    <!-- 动态获取用户id可以使用scope.row.id  -->
+    <el-tag @click="getListByid(2)">根据id获取数据</el-tag>
     <el-row>
     <el-button>默认按钮</el-button>
     <el-button type="primary">主要按钮</el-button>
@@ -19,9 +22,26 @@ console.log(path.resolve(__dirname,'eductation/webpack-simple/src'));
 
 export default {
   methods: {
-    olClick: function() {
-      let x = 1;
-      alert(x);
+    async getGoodsList() {
+      const {data: res} = await this.$http.get('/api/goodslist');
+      const result = await this.$http.get('/api/goodslist');
+      console.log(result, 'result');
+      console.log(res, 'res');
+    },
+
+    async postGoodsList() {
+      const {data: res} = await this.$http.post('/api/addgoods',{
+        name: '苹果',
+        price: 5,
+        count: 550,
+        img: ''
+      });
+      console.log(res);
+    },
+
+    async getListByid(id) {
+      const { data: res} = await this.$http.get(`/api/goodslist/${id}`);
+      console.log(res);
     }
   }
 };
