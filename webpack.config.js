@@ -1,6 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
@@ -85,7 +85,9 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'vue$': 'vue/dist/vue.esm.js'
+      // 'vue$': 'vue/dist/vue.esm.js',
+      // '@': resolve('src')
+      '@': path.resolve(__dirname, 'src')
     },
     extensions: ['*', '.js', '.vue', '.json']
   },
@@ -108,11 +110,11 @@ if (process.env.NODE_ENV === 'production') {
         NODE_ENV: '"production"'
       }
     }),
-    new UglifyJsPlugin({
-      uglifyOptions: {        
-        ecma: 8      
-      }
-    }),
+    // new UglifyJsPlugin({
+    //   uglifyOptions: {        
+    //     ecma: 8      
+    //   }
+    // }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
     })
