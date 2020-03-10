@@ -68,7 +68,7 @@ module.exports = {
         options: {
           formatter: require('eslint-friendly-formatter') // 指定错误报告的格式规范
         },
-        // exclude: /node_modules/
+        exclude: /node_modules/ 
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
