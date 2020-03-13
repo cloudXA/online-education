@@ -9,27 +9,33 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: () => import ('@/components/test.vue')
+      component: () => import ('@/views/home.vue'),
+      children: [
+        {
+          path: '/knowledge',
+          component: () => import ('@/components/knowledge')
+        },
+        {
+          path: '/home-page',
+          component: () => import('@/components/homePage')
+        }
+      ]
     },
     {
-      path: '/templateGrammar',
-      component: () => import ('@/components/template.vue')
+      path: '/searchBar',
+      component: () => import ('@/components/navbar/search')
     },
     {
-      path: '/conditionalJudegment',
-      component: () => import ('@/components/condition.vue')
+      path: '/navbar',
+      component: () => import ('@/components/navbar')
     },
     {
-      path: '/component',
-      component: () => import ('@/components/component.vue')
+      path: '/login',
+      component: () => import ('@/components/login')
     },
     {
-      path: '/menu',
-      component: () => import ('@/views/index.vue')
-    },
-    {
-      path: '/mock-server',
-      component: () => import ('@/components/mock-server.vue')
+      path: '/register',
+      component: () => import ('@/components/register')
     }
   ]
 });

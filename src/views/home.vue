@@ -1,18 +1,22 @@
 <template>
   <div>
-    <slot name="f">slot的默认内容</slot>
+    <nav-bar></nav-bar>
   </div>
 </template>
 
 <script>
+import NavBar from '@/components/navbar'
+
 export default {
-  name: 'Foo',
+  components: {
+    NavBar
+  },
   data() {
     return {
 
-    };
+    }
   }
-};
+}
 </script>
 
 <style>
