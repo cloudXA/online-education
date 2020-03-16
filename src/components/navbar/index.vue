@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="container">
     <div class="navbar">
       <el-row class="inner">
-        <el-col :span="3" class="love">
+        <el-col :span="4" class="love">
           <div class="logContainer grid-content">
             <span>爱题网</span>
           </div>
@@ -52,7 +52,7 @@ export default {
 }
 </script>
 
-<style lang="scss" >
+<style lang="scss" scoped>
   .easy {
     text-align: right;
     .login {
@@ -64,9 +64,9 @@ export default {
     }
   }
   .inner {
-    padding-top: 10px;
     width: 1200px;
     margin: 0 auto;
+    padding-top: 10px;
   }
   .tabContent {
     padding-top: 10px;
@@ -83,6 +83,7 @@ export default {
     
   }
   .navbar {
+    width: 100%;
     height: 70px;
     margin: 0 auto;
   }

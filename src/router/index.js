@@ -10,6 +10,7 @@ export default new Router({
     {
       path: '/',
       component: () => import ('@/views/home.vue'),
+      redirect: '/home-page',
       children: [
         {
           path: '/knowledge',

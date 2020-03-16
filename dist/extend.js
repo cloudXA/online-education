@@ -6,4 +6,4 @@ Random.extend({
         const arr = ['香蕉','苹果','橘子','桃子','杏'];
         return this.pick(arr);
     }
-}); 
+});
