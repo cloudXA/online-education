@@ -1,10 +1,9 @@
 <template>
   <div class="container">
-    <!-- TODO: bug 图片未能全部拓展 -->
-    <div class="banner">
-    </div>
+    <div class="banner"></div>
     <sub-navbar></sub-navbar>
     <interview-area></interview-area>
+    <common-area></common-area>
     
   </div>
 </template>
@@ -12,11 +11,13 @@
 <script>
 import SubNavbar from '@/components/subNavbar/index'
 import InterviewArea from '@/components/interviewArea/index'
+import CommonArea from '@/components/commonArea/index'
 
 export default {
   components: {
     SubNavbar,
-    InterviewArea
+    InterviewArea,
+    CommonArea
   },
   data() {
     return {
@@ -26,7 +27,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scope>
+<style lang="scss"  scoped>
   .container {
     width: 100%;
   }

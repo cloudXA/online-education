@@ -41,7 +41,7 @@ export default {
         }
       },
       handleClick(tab, event) {
-        console.log(tab, event);
+        // console.log(tab, event);
       },
       async getNodes() {
         const { data: res} = await this.$http.get('/api/getNodes');
@@ -51,7 +51,7 @@ export default {
         }
         this.rootNodes = suitable
         this.secondaryNodes = res.data[0].children[0].children
-        console.log(res,'res');
+        // console.log(res,'res');
       }
     },
     mounted() {
@@ -60,10 +60,11 @@ export default {
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .tabNav {
     width: 1200px;
     margin: 0 auto;
+    background-color:#FFFFFF;
   }
   .el-tabs__active-bar {
     background-color: white;

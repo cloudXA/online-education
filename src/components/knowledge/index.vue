@@ -1,15 +1,24 @@
 <template>
   <div>
-    把你号
+    <!-- <Eyes></Eyes> -->
   </div>
 </template>
 
 <script>
-export default {
+// import Eyes from '@/common/eyes'
 
+export default {
+  data() {
+    return {
+
+    }
+  },
+  components: {
+    Eyes
+  }
 }
 </script>
 
-<style>
-
+<style scoped>
+  
 </style>
