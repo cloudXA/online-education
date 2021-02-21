@@ -7,6 +7,7 @@ import axios from 'axios';
 
 import Element from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import '../common.scss';  
 
 // 使mock生效
 import '../mock/';

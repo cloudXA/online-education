@@ -1,0 +1,40 @@
+body,
+dl,
+dd,
+dt,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+ol,
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/*list-style:none;表示清除表项目前面的小图形或者序号，删除list-style:none;也能达到清除效果*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/*星号表示通配符选择器，可以选中所有标签*/
+
+.clearfix:after {
+  clear: both;
+  height: 0;
+  visibility: hidden;
+  display: block;
+  content: "";
+}
+
+/*text-decoration:none;表示清除下划线，color表示标签内的文本颜色，inherit表示继承父级标签的文本颜色*/
