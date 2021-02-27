@@ -1,16 +1,26 @@
 import request from '@/utils/request';
 
-class LoginInfo {
+class UserInfo {
+  // 登录
   login(data) {
     debugger;
     return request({
-      url: '',
+      url: '/user/login',
+      method: 'post',
+      data
+    })
+  }
+
+  // 注册
+  signUp(data) {
+    return request({
+      url: '/user/signup',
       method: 'post',
       data
     })
   }
 }
 
-const loginInfo = new LoginInfo();
+const signOrlogin = new UserInfo();
 
-export default loginInfo; 
+export default signOrlogin; 

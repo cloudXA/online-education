@@ -1,36 +1,21 @@
 <template>
-  <div class="cont clearfix" :style="{height: height}" ref="app">
+  <div class="cont clearfix" :style="{'height': height}" ref="app">
     <p class="title">爱题网</p>
     <div class="container clearfix">
-      <p class="formTitle">登录</p>
+      <p class="formTitle">注册</p>
       <el-form ref="form" :model="form" label-width="80px" label-position="top">
-        <el-form-item label="账号：">
-          <el-input v-model="form.email" placeholder="请输入账号"></el-input>
+        <el-form-item label="邮箱：">
+          <el-input v-model="form.email" placeholder="请输入邮箱"></el-input>
         </el-form-item>
         <el-form-item label="密码："> 
           <el-input v-model="form.password" placeholder="请输入密码"></el-input>
         </el-form-item>
-        <el-form-item label="验证码：">
-          <el-input v-model="form.vertification" placeholder="请输入验证码"></el-input>
+        <el-form-item size="large" class="signButton">
+          <el-button type="primary" @click="onSubmit">注册</el-button>
         </el-form-item>
-        <p class="forgetPassword">忘记密码</p>
-        <el-form-item size="large">
-          <el-button type="primary" @click="onSubmit">登录</el-button>
-        </el-form-item>
-        <p class="registerCon">没有账户，<a href="#/sign" class="register">去注册</a></p>
-        <ul>
-          <li>
-            <span class="loginQQ"></span>
-            <span>QQ登录</span>
-          </li>
-          <li>
-            <span class="loginwechat"></span>
-            <span>微信登录</span>
-          </li>
-        </ul>
       </el-form>
     </div>
-  </div>
+  </div>  
 </template>
 
 <script>
@@ -40,38 +25,33 @@ export default {
       form: {
         email: '',
         password: '',
-        vertification: ''
       },
-      height: '',
-      width: ''
+      height: ''
     }
   },
   methods: {
     onSubmit() {
-      console.log(this.form, 'form')
       this.$refs.form.validate(valid => {
         if(valid) {
-          this.$store.dispatch('user/login_vuex', this.form)
+          this.$store.dispatch('user/sign_vuex', this.form)
             .then((data) => {
-              debugger;
-              this.$router.push({name: 'home'})
+              this.$router.push({name: 'login'})
             })
         }
       })
     }
   },
   mounted() {
-    // 获取浏览器宽高   
+    // 获取浏览器宽高 
     // this.height = document.documentElement.clientHeight
     this.$refs.app.style.height = document.documentElement.clientHeight + 'px'
 
-    this.height = document.documentElement.clientHeight
-    this.width = document.documentElement.clientWidth
+   
   },
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .cont {
     height:auto; 
     overflow:hidden;
@@ -96,11 +76,12 @@ export default {
     z-index: 10;
     border: 1px solid blueviolet;
     width: 520px;
-    height: 600px;  //加上之后使得width超出1920px  
+    height: 400px;  //加上之后使得width超出1920px  
     position: absolute;
     left: 720px;
     top: 32px;
     padding: 40px 82px 37px 78px;
+    width: 520px;
     background: #FFFFFF;
     border-radius: 8px;
     border: 1px solid #979797;
@@ -146,53 +127,14 @@ export default {
       }
     }
 
-    & ul {
-      display: flex;
-      padding-left: 77px;
-      padding-top: 21px;
-      li {
-        cursor: pointer;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        font-size: 14px;
-        font-family: PingFangSC-Regular, PingFang SC;
-        font-weight: 400;
-        color: #8E95AC;
-        line-height: 14px;
+    & .signButton {
+      margin-top: 50px;
+    } 
 
-      }
-
-      li:nth-child(2) {
-        padding-left: 150px;
-      }
-
-      .loginQQ {
-        display: inline-block;
-        background-image: url("../../image/qq.png");
-        background-repeat: no-repeat;
-        background-position: 0 0;
-        width: 30px;
-        height: 30px;
-        margin-bottom: 10px;
-      }
-
-      .loginwechat {
-        background-position: center;
-        display: inline-block;
-        background-image: url("../../image/微信.png");
-        background-repeat: no-repeat;
-        width: 30px;
-        height: 30px;
-        margin-bottom: 10px;
-      }
-
-
-    }
   }
 </style>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .container > .el-form {
     .el-form-item__label {
       line-height: 20px;

@@ -1,7 +1,8 @@
-import loginInfo from '@/api/user';
+import signOrlogin from '@/api/user';
+import tokenInstance from '@/utils/auth';
 
 const state = {
-  token: ''
+  token: tokenInstance.getToken()  // cookie
 }
 
 const mutations = {
@@ -13,15 +14,36 @@ const mutations = {
 const actions = {
   // user login
   login_vuex({ commit }, userInfo) {
-    debugger;
-    const { account, password } = userInfo;
-    loginInfo.login({ account: account.trim(), password})
-      .then(response => {
-        console.log(response)
-      })
-      .catch(error => {
-        reject(error)
-      })
+    const { email, password } = userInfo;
+    return new Promise((resolve, reject) => {
+      signOrlogin.login({ email: email.trim(), password})
+        .then(response => {
+          console.log(response, 'response')
+          commit('SET_TOKEN', response.data.token);      // vuex
+          tokenInstance.setToken(response.data.token);   // cookie
+          resolve(response)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
+    
+  },
+
+  // 注册
+  sign_vuex({ commit }, userInfo) {
+    const { email, password } = userInfo;
+    return new Promise((resolve, reject) => {
+      signOrlogin.signUp({ email: email.trim(), password})
+        .then(response => {
+          console.log(response)
+          resolve(response)  
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
+    
   }
 }
 

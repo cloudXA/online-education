@@ -10,6 +10,7 @@ export default new Router({
     {
       path: '/',
       component: () => import ('@/views/home.vue'),
+      name: 'home',
       children: [
         {
           path: '/knowledge',
@@ -31,7 +32,13 @@ export default new Router({
     },
     {
       path: '/login',
-      component: () => import ('@/components/login')
+      component: () => import ('@/components/login'),
+      name: 'login'
+    },
+    {
+      path: '/sign',
+      component: () => import('@/components/sign'),
+      name: 'sign'
     },
     {
       path: '/register',
