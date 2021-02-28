@@ -9,6 +9,8 @@ import Element from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import '../common.scss';  
 
+import './permission.js';
+
 // 使mock生效
 import '../mock/';
 

@@ -1,110 +1,152 @@
 <template>
-  <div>
-    <div class="navbar">
-      <el-row class="inner">
-        <el-col :span="3" class="love">
-          <div class="logContainer grid-content">
-            <span>爱题网</span>
-          </div>
-        </el-col>
-        <el-col :span="10" class="tabContent">
-            <router-link to="home-page" class="homepage">首页</router-link>
-            <router-link to="knowledge" class="knowledge">题库</router-link>
-        </el-col>
-        <el-col :span="6">
-          <div class="grid-content">
-            <search-bar></search-bar>
-          </div>
-        </el-col>
-        <el-col :span="4" class="easy">
-          <div class="grid-content ">
-            <router-link to="login" class="login">登录</router-link>
-            <router-link to="register" class="register">
-              <el-button round>注册</el-button>
-            </router-link>
-          </div>
-        </el-col>
-      </el-row>
+  <div class="container">
+    <div class="content">
+      <ul>
+        <li>
+          <ul class="logo-container">
+            <li class="logo">爱题网</li>
+            <li>
+              <ul>
+                <li class=" condition">首页</li>
+                <li></li>
+                <li class="active condition">题库</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li></li>
+        <li>
+          <ul class="search-container">
+            <li>
+              <search-bar></search-bar>
+            </li>
+            <li>  </li>
+            <li>
+              <ul>
+                <li class="login">登录</li>
+                <li class="sign">注册</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
     </div>
-    <router-view></router-view>
-  </div>
-  
-  
+
+  </div>  
 </template>
 
 <script>
-import SearchBar from './search/index.vue'
+import SearchBar from './components/index';
+
 
 export default {
+  name: 'NavBar',
   components: {
     SearchBar
-  },
-  data() {
-      return {
-        activeName: 'second'
-      };
-    },
-    methods: {
-      handleClick(tab, event) {
-        console.log(tab, event);
-      }
-    }
+  }
 }
 </script>
 
-<style lang="scss" >
-  .easy {
-    text-align: right;
-    .login {
-      text-decoration: none;
-    }
-    .register {
-      width: 56px;
-      height: 24px;
-    }
-  }
-  .inner {
-    padding-top: 10px;
-    width: 1200px;
-    margin: 0 auto;
-  }
-  .tabContent {
-    padding-top: 10px;
-    .homepage, .knowledge {
-      text-decoration: none;
-      margin-right: 70px;
-      padding-bottom: 28px;
-      
-    }
-    .router-link-active {
-      border-bottom: 2px solid #586AEA;
-      color: #586AEA;
+<style scoped lang="scss">
+  .container {
+    height: 70px;
+    background: #FFFFFF;
+    box-shadow: 6px 0px 12px 0px rgba(0, 0, 0, 0.1);
+
+    .content {
+      width: 1200px;
+      margin: 0 auto;
+
+
+
+      & > ul {
+        display: grid;
+        grid-template-columns: 305px 370px 493px;
+        grid-template-rows: 70px;
+        // line-height: 70px;
+        justify-items: center;
+        align-items: center;
+      }
+
+      .logo-container {
+        display: grid;
+        grid-template-columns: 200px 134px;
+
+        .logo {
+          width: 96px;
+          height: 70px;
+          line-height: 70px;
+          font-size: 32px;
+          font-family: PingFangSC-Medium, PingFang SC;
+          font-weight: 500;
+          color: #586AEA;
+
+        }
+
+        .condition {
+          width: 32px;
+          height: 70px;
+          font-size: 16px;
+          line-height: 70px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #505050;
+          cursor: pointer;
+        }
+
+        .active {
+          width: 32px;
+          height: 70px;
+          font-size: 16px;
+          font-family: PingFangSC-Medium, PingFang SC;
+          font-weight: 500;
+          color: #586AEA;
+          border-bottom: 2px solid #586AEA;
+        }
+
+        & ul {
+          display: grid;
+          grid-template-columns: 40px 40px 70px;
+        }
+      }
+
+      .search-container {
+        display: grid;
+        grid-template-columns: 320px 30px 90px;
+        align-items: center;
+        cursor: pointer;
+        
+        .login {
+          width: 24px;
+          height: 17px;
+          font-size: 12px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #505050;
+          align-items: center;
+
+
+        }
+        .sign {
+          width: 56px;
+          height: 24px;
+          border-radius: 12px;
+          border: 1px solid #586AEA;
+          font-size: 12px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #586AEA;
+          text-align: center;
+          line-height: 22px;
+        }
+        & ul {
+          display: grid;
+          grid-template-columns: 34px 56px;
+          align-items: center;
+        }
+      }
     }
     
-  }
-  .navbar {
-    height: 70px;
-    margin: 0 auto;
-  }
-  .el-row {
-    margin-bottom: 20px;
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-  .el-col {
-    border-radius: 4px;
-  }
-  .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
-  }
-  .row-bg {
-    padding: 10px 0;
-    background-color: #f9fafc;
-  }
-  .logContainer {
-    color: #586AEA;
-    font-size: 32px;
+    
   }
 </style>

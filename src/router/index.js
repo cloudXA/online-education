@@ -7,7 +7,7 @@ Vue.use(Router);
 export default new Router({
   
   routes: [
-    {
+    { 
       path: '/',
       component: () => import ('@/views/home.vue'),
       name: 'home',
@@ -21,10 +21,6 @@ export default new Router({
           component: () => import('@/components/homePage')
         }
       ]
-    },
-    {
-      path: '/searchBar',
-      component: () => import ('@/components/navbar/search')
     },
     {
       path: '/navbar',
