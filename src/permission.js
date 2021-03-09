@@ -15,7 +15,8 @@
         next();  
       }
     } else {
-      whiteList.indexOf(to.path) !== -1 ? next() : ''
+      whiteList.indexOf(to.path) !== -1 ? next() : next({ path: '/login'})
+      // next();
     }
   })
 

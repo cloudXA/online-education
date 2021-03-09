@@ -5,7 +5,7 @@ class UserInfo {
   login(data) {
     debugger;
     return request({
-      url: '/user/login',
+      url: '/api/user/login',
       method: 'post',
       data
     })
@@ -14,7 +14,7 @@ class UserInfo {
   // 注册
   signUp(data) {
     return request({
-      url: '/user/signup',
+      url: '/api/user/signup',
       method: 'post',
       data
     })

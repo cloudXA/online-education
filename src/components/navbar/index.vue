@@ -6,10 +6,14 @@
           <ul class="logo-container">
             <li class="logo">爱题网</li>
             <li>
-              <ul>
-                <li class=" condition">首页</li>
+              <ul @click="handleToggle($event)">
+                <li :class="{condition: true, active: isActive }"   name="homepage">
+                  首页
+                </li>
                 <li></li>
-                <li class="active condition">题库</li>
+                <li :class="{condition: true, active: !isActive }" name="knowledge">
+                  题库
+                </li>
               </ul>
             </li>
           </ul>
@@ -31,7 +35,7 @@
         </li>
       </ul>
     </div>
-
+    <router-view></router-view>
   </div>  
 </template>
 
@@ -43,6 +47,19 @@ export default {
   name: 'NavBar',
   components: {
     SearchBar
+  },
+  data() {
+    return {
+      isActive: true
+    }
+  },
+  methods: {
+    handleToggle(event) {
+        let navigate = event.target.getAttribute('name');
+        this.$router.push({ name: navigate });
+        this.isActive = !this.isActive; 
+
+    }
   }
 }
 </script>

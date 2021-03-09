@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="banner">
+      得到
     </div>
     <sub-navbar></sub-navbar>
     

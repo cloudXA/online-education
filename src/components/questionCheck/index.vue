@@ -1,12 +1,11 @@
 <template>
   <div>
     <nav-bar></nav-bar>
-        
-  </div>
+  </div>  
 </template>
 
 <script>
-import NavBar from '@/components/navbar'
+import NavBar from '../navbar/index.vue'
 
 export default {
   components: {
@@ -16,7 +15,7 @@ export default {
     return {
 
     }
-  }
+  },
 }
 </script>
 
