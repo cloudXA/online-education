@@ -28,24 +28,24 @@ Mock.mock('/api/addgoods','post', function(option) {
     });
 });
 
-Mock.mock(/\/api\/goodslist/,'get',function(option) {
-    console.log(option);
+// Mock.mock(/\/api\/goodslist/,'get',function(option) {
+//     console.log(option);
 
-    // 返回数组形式包裹的字符串，该字符串是符合匹配正则的的字符：如完整的匹配字符串，和匹配的数字，
-    const res = /\/api\/goodslist\/(\d+)/.exec(option.url);
+//     // 返回数组形式包裹的字符串，该字符串是符合匹配正则的的字符：如完整的匹配字符串，和匹配的数字，
+//     const res = /\/api\/goodslist\/(\d+)/.exec(option.url);
 
-    console.log(res,'res');
+//     console.log(res,'res');
 
-    return Mock.mock({
-        data: {
-            id: res[1] - 0,
-            name: '@fruit()',
-            price: 2,
-            count: 199,
-            img: '@dataImage(25x25)'
-        },
-        status: 200,
-        message: '获取商品成功'
-    });
+//     return Mock.mock({
+//         data: {
+//             id: res[1] - 0,
+//             name: '@fruit()',
+//             price: 2,
+//             count: 199,
+//             img: '@dataImage(25x25)'
+//         },
+//         status: 200,
+//         message: '获取商品成功'
+//     });
 
-});
+// });

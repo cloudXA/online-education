@@ -3,7 +3,6 @@ import request from '@/utils/request';
 class UserInfo {
   // 登录
   login(data) {
-    debugger;
     return request({
       url: '/api/user/login',
       method: 'post',
