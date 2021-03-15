@@ -1,4 +1,5 @@
 <template>
+
   <div class="container">
     <div class="content">
       <ul>
@@ -35,8 +36,13 @@
         </li>
       </ul>
     </div>
-    <router-view></router-view>
+
+    <div class="router-content" :class="{ 'is-homepage': isHomepage }">
+      <router-view></router-view>
+    </div>
+    
   </div>  
+
 </template>
 
 <script>
@@ -50,16 +56,19 @@ export default {
   },
   data() {
     return {
-      isActive: true
+      isActive: true,
+      isHomepage: true
     }
   },
   methods: {
     handleToggle(event) {
         let navigate = event.target.getAttribute('name');
+        navigate == 'homepage' ? this.isHomepage = true : this.isHomepage = false
+        navigate == 'homepage' ? this.isActive = true : this.isActive = false
         this.$router.push({ name: navigate });
-        this.isActive = !this.isActive; 
-
-    }
+        
+    },
+    
   }
 }
 </script>
@@ -162,6 +171,14 @@ export default {
           align-items: center;
         }
       }
+    }
+
+    .router-content {
+      background: #F8F8F8;
+      padding-top: 20px;
+    }
+    .is-homepage {
+      padding-top: 0px;
     }
     
     

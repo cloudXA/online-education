@@ -4,7 +4,7 @@ import token from './auth';
 
 // 创建axios实例
 const service = axios.create({
-  // baseURL: "http://localhost:4000",
+  baseURL: "http://localhost:4000",
   timeout: 5000
 });
 
