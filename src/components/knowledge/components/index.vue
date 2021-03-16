@@ -41,10 +41,8 @@
             <i class="el-icon-view"></i>
             <span>{{item.views}}</span>
           </li>
-
-          <li class="likes pointer" @click="handleLike">
-            <i class="el-icon-star-on" v-if="false"></i>
-            <i class="el-icon-star-off"></i>
+          <li class="likes pointer" @click="handleLike($event, item._id, item.isLiked)">
+            <i :class="{'el-icon-star-off': !item.isLiked, 'el-icon-star-on': item.isLiked }"></i>
             <span>{{item.likes}}</span>
           </li>
         </ul>
@@ -60,6 +58,7 @@ export default {
     return {
       renderData: '',
       handledChoose: '',
+      isActive: false,
       propertyMap: {
           '1': '单选',
           '2': "多选",
@@ -97,19 +96,44 @@ export default {
     
   },
   created() {
-    this.$ajax({
-        url: '/api/exercise',
-        method: 'get',
-    })
-      .then(result => {
-        this.renderData = result.data.result;
-    })
+    this.queryExercise();
 
   },
   methods: {
-    // TODO: 处理收藏
-    handleLike() {
+    handleLike(event, id, isLiked) {
+      if(isLiked) {
+        this.$ajax({
+          url: '/api/likes/cancel',
+          method: 'post',
+          data: {id}
+        })
+        .then(() => {
+          this.queryExercise();
+        })
 
+      } else {
+        this.$ajax({
+          url: '/api/likes/add',
+          method: 'post',
+          data: {id}
+        })
+        .then(() => {
+          this.queryExercise();
+        })
+      }
+    },
+
+    /**
+     * 请求exercise 
+     */
+    queryExercise() {
+      this.$ajax({
+          url: '/api/exercise',
+          method: 'get',
+      })
+        .then(result => {
+          this.renderData = result.data.result;
+      })
     }
   }
 }
@@ -251,6 +275,9 @@ export default {
           background:  #F8F8F8;;
           padding: 10px 60px 27px 22px;
         } 
+        .el-icon-star-on {
+          color: #FFB25A
+        }
       }
     }
   }
