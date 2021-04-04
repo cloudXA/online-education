@@ -12,8 +12,6 @@ const service = axios.create({
 // 请求拦截 
 service.interceptors.request.use(
   config => {
-    debugger;
-
     // do something before request is sent 
 
     // if(store.getters.token) {
@@ -22,6 +20,7 @@ service.interceptors.request.use(
 
     return config
   },
+  
   error => {
     // do something with request error 
     console.log(error)

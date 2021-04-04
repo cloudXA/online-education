@@ -9,7 +9,7 @@ export default new Router({
   routes: [
     { 
       path: '/',
-      component: () => import ('@/views/home.vue'),
+      component: () => import ('@/home/index.vue'),
       redirect: '/homepage',
       name: 'home',
       children: [
