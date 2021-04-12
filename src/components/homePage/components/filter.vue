@@ -16,6 +16,19 @@
         {{ item.name  }}
       </li>
     </ul>
+    <ul class="choose">
+      <li class="chooseTitle">
+        常规选项：
+      </li>
+      <li>
+        <ul class="chooseContainer" @click="handleChooseClick($event)" ref="chooseUl">
+          <li v-for="(item, index) in chooseList" :key="index" >
+            {{ item.name }}
+          </li>
+        </ul>
+      </li>
+    </ul>
+    
   </div>  
 </template>
 
@@ -27,6 +40,28 @@ export default {
       topList: [],
       mediumList: [],
       basicList: [],
+      chooseList: [
+        {
+          type: 0,
+          name: '全部'
+        },
+        {
+          type: 1,
+          name: '单选'
+        },
+        {
+          type: 2,
+          name: '多选'
+        },
+        {
+          type: 3,
+          name: '判断'
+        },
+        {
+          type: 4,
+          name: '简答'
+        }
+      ],
       isActive: true
     }
   },
@@ -73,7 +108,7 @@ export default {
       
       .then(result => {
         let { containers } = result.data.data;
-        console.log(containers, 'containers')
+        // console.log(containers, 'containers')
         this.mediumList = containers
       })
     },
@@ -92,8 +127,20 @@ export default {
       
       .then(result => {
         let { containers } = result.data.data;
-        console.log(containers, 'containers')
         this.basicList = containers
+      })
+    },
+
+    queryExerciseBasic(id) {
+      this.$ajax({
+        url: '/api/filterate/basicExercise',
+        method: 'get',
+        params: {
+          id: id
+        }
+      })
+      .then(result => {
+        console.log(result, 'reuslt queryexeericse')
       })
     },
 
@@ -126,6 +173,16 @@ export default {
     handleBasicClick(event) {
       if(event.target.tagName == "LI") {
         this.toggleActive(event);
+        let id = event.target.getAttribute('id');
+        this.$emit('basicFilter', id)
+        // this.queryExerciseBasic(event.target.getAttribute('id'))
+      }
+    },
+
+    handleChooseClick(event) {
+      if(event.target.tagName == "LI") {
+        this.toggleActive(event);
+        // this.queryExerciseBasic(event.target.getAttribute('id'))
       }
     },
 
@@ -193,7 +250,11 @@ export default {
       color: #586AEA;
     }
   }
-  .mediumContainer, .basicContainer {
+  .choose {
+    display: flex;
+    align-items: baseline;
+  }
+  .mediumContainer, .basicContainer, .chooseContainer {
     display: flex;
     flex-wrap: wrap;
     padding-bottom: 10px;
@@ -210,6 +271,14 @@ export default {
     .active {
       background: #586AEA;
       color: #FFFFFF;
+    }
+    .chooseTitle {
+      font-size: 18px;
+      font-family: STHeitiSC-Medium, STHeitiSC;
+      font-weight: 500;
+      color: #333333;
+      line-height: 19px;
+      border: none;
     }
   }
   .basicContainer {

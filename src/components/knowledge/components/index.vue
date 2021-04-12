@@ -20,7 +20,7 @@
         </ul>
         <!-- 简答答案 -->
         <ul v-if="[4].includes(item.property)" class="short-answer-container">
-          <li>正确答案:</li>
+          <li class="">正确答案:</li>
           <li>{{item.shortSolution}}</li>
         </ul>
         
@@ -247,6 +247,7 @@ export default {
             font-family: PingFangSC-Regular, PingFang SC;
             font-weight: 400;
             color: #586AEA;
+            margin-bottom: 5px;
           }
           li:nth-child(2) {
             font-size: 14px;
