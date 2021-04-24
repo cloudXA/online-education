@@ -13,6 +13,7 @@ import FilterNavbar from "./components/filter";
 import InterView from "./components/interview";
 
 export default {
+  name: "homepage",
   components: {
     SubNavbar,
     FilterNavbar,

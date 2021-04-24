@@ -5,7 +5,6 @@
   const whiteList = ['/login', '/'];   // 路由白名单
 
   router.beforeEach((to, from, next) => { 
-    debugger;
     const hasToken = tokenInstance.getToken();
    
     if(hasToken) {

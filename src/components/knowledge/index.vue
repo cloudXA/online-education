@@ -8,6 +8,7 @@
 import QuestionTip from './components/index'
 
 export default {
+  name: "knowledge",
   components: {
     QuestionTip
   },

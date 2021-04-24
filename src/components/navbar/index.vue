@@ -1,5 +1,4 @@
 <template>
-
   <div class="container">
     <div class="content">
       <ul>
@@ -7,14 +6,14 @@
           <ul class="logo-container">
             <li class="logo">爱题网</li>
             <li>
-              <ul @click="handleToggle($event)">
-                <li :class="{condition: true, active: isActive }"   name="homepage">
+              <ul>
+                <router-link :to="{name: 'homepage'}" tag="li" class="condition" name="homepage">
                   首页
-                </li>
+                </router-link>
                 <li></li>
-                <li :class="{condition: true, active: !isActive }" name="knowledge">
+                <router-link :to="{name: 'knowledge'}" tag="li" class="condition" name="knowledge">
                   题库
-                </li>
+                </router-link>
               </ul>
             </li>
           </ul>
@@ -25,7 +24,7 @@
             <li>
               <search-bar></search-bar>
             </li>
-            <li>  </li>
+            <li></li>
             <li>
               <ul>
                 <li class="login">登录</li>
@@ -37,17 +36,12 @@
       </ul>
     </div>
 
-    <div class="router-content" :class="{ 'is-homepage': isHomepage }">
-      <router-view></router-view>
-    </div>
-    
   </div>  
 
 </template>
 
 <script>
-import SearchBar from './components/index';
-
+import SearchBar from './components/search';
 
 export default {
   name: 'NavBar',
@@ -61,13 +55,7 @@ export default {
     }
   },
   methods: {
-    handleToggle(event) {
-        let navigate = event.target.getAttribute('name');
-        navigate == 'homepage' ? this.isHomepage = true : this.isHomepage = false
-        navigate == 'homepage' ? this.isActive = true : this.isActive = false
-        this.$router.push({ name: navigate });
-        
-    },
+    
     
   }
 }
@@ -89,9 +77,9 @@ export default {
         display: grid;
         grid-template-columns: 305px 370px 493px;
         grid-template-rows: 70px;
-        // line-height: 70px;
         justify-items: center;
         align-items: center;
+        
       }
 
       .logo-container {
@@ -120,7 +108,7 @@ export default {
           cursor: pointer;
         }
 
-        .active {
+        .router-link-active {
           width: 32px;
           height: 70px;
           font-size: 16px;

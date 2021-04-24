@@ -133,6 +133,7 @@ export default {
       })
         .then(result => {
           this.renderData = result.data.result;
+          
       })
     }
   }

@@ -25,7 +25,7 @@
           </div>
         </div>
         <div class="x-button">
-          <x-button>立即前往</x-button>
+          <x-button @click.native="handleSkip(item.idList)">立即前往</x-button>
         </div>
       </div> 
     </div>
@@ -35,7 +35,8 @@
 </template>
 
 <script>
-import XButton from '../../../common/button/index'
+import XButton from '../../../common/button/index';
+import { v4 as uuidv4 } from 'uuid';
 
 export default {
   components: {
@@ -89,6 +90,20 @@ export default {
         companyExercise.push({idList, company: item, total: idList.length, views: Math.max(...idList.map(item => item.views)) })
       })
       this.companyExercise = companyExercise;
+    },
+
+    handleSkip(list) {
+      let idList = list.map(item => item.id)
+                        .join()
+      this.$router.push({
+        name: 'summary',
+        params: {
+          company: '小米',
+          id: list[0].id
+        } 
+      })
+      let id = uuidv4();
+      window.localStorage.setItem(id, idList)
     }
   }
 }

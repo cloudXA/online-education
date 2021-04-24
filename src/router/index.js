@@ -1,3 +1,4 @@
+
 import Vue from 'vue';
 import Router from 'vue-router';
 
@@ -24,6 +25,11 @@ export default new Router({
           name: 'homepage'
         }
       ]
+    },
+    {
+      path: "/summary/:company/:id",  // 题库
+      component: () => import('@/components/summary/index.vue'),
+      name: 'summary'
     },
     {
       path: '/navbar',
