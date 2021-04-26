@@ -1,8 +1,17 @@
 <template>
   <div class="container">
-    <div class="banner"></div>
-    <filter-navbar @basicFilter="queryExerciseBasic"></filter-navbar>
-    <inter-view :id="id"></inter-view>
+    <!-- 图片横幅 -->
+    <div class="banner">
+
+    </div>
+    <!-- 级联选择器 -->
+    <filter-navbar @basicFilter="queryExerciseBasic">
+
+    </filter-navbar>
+    <!-- 面试题区 -->
+    <inter-view :id="id" @clickButton="skipSummary">
+
+    </inter-view>
 
   </div>
 </template>
@@ -11,6 +20,8 @@
 import SubNavbar from "@/components/subNavbar/index";
 import FilterNavbar from "./components/filter";
 import InterView from "./components/interview";
+import { v4 as uuidv4 } from 'uuid';
+
 
 export default {
   name: "homepage",
@@ -27,6 +38,23 @@ export default {
   methods: {
     queryExerciseBasic(id) {
       this.id = id;
+    },
+
+    skipSummary(list, company) {
+      let idList = list.map(item => item.id)
+      let jointId = idList.join();
+
+      let companyId = uuidv4();   
+
+      this.$router.push({
+        name: 'summary',
+        params: {
+          companyId: companyId,
+          id: idList[0]
+        } 
+      })
+      
+      window.localStorage.setItem(companyId, jointId)
     }
   }
 };
@@ -39,7 +67,7 @@ export default {
     cursor: pointer;
     width: 100%;
     height: 560px;
-    background-image: url("./image/banner.png");
+    background-image: url("../../image/banner.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100% 100%;

@@ -1,5 +1,6 @@
 <template>
   <div class="knowledge">
+    <!-- 知识题库（带有解析） -->
       <question-tip></question-tip>
   </div>
 </template>

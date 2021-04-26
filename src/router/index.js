@@ -27,7 +27,7 @@ export default new Router({
       ]
     },
     {
-      path: "/summary/:company/:id",  // 题库
+      path: "/summary/:companyId/:id",  // 题库
       component: () => import('@/components/summary/index.vue'),
       name: 'summary'
     },

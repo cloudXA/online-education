@@ -1,36 +1,43 @@
 <template>
   <div>
     <nav-bar></nav-bar>
-    {{ exercise }}
+    <!-- {{ exercise }} -->
+    <exercise :exercise="exercise" :total="total"></exercise>
+    {{ total }}
   </div>  
 </template>
 
 <script>
-import NavBar from '../navbar/index'
+import NavBar from '../navbar/index';
+import exercise from './components/exercise';
 
 export default {
   name: 'Summary',
   components: {
-    NavBar
+    NavBar,
+    exercise
   },
 
   data() {
     return {
-      exercise: ""
+      exercise: "",
+      total: "",
+      exerciseIndex: 0
     }
   },
-
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      console.log(vm, 'vm')
-    })
-
-  },
-
+  /**
+   * exerciseIndex: this.$route.params.exerciseIdList
+   */
   async created() {
     let data = await this.getExercise(this.$route.params.id);
-    // console.log(data, 'data')
     this.exercise = data;
+
+    
+    let jointId = localStorage.getItem(this.$route.params.companyId);
+    let idList = jointId.split(",");
+    this.total = idList.length;
+
+
   },
 
   methods: {
