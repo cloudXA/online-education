@@ -12,15 +12,15 @@ const mutations = {
 }
 
 const actions = {
-  // user login
+  //登录
   login_vuex({ commit }, userInfo) {
     const { email, password } = userInfo;
     return new Promise((resolve, reject) => {
       signOrlogin.login({ email: email.trim(), password})
         .then(response => {
-          console.log(response, 'response')
           commit('SET_TOKEN', response.data.token);      // vuex
-          tokenInstance.setToken(response.data.token);   // cookie
+          tokenInstance.setToken(response.data.token);   // cookie token
+          tokenInstance.setUserInfo(response.data.userInfor[0]._id);   // cookie userInfo
           resolve(response)
         })
         .catch(error => {
@@ -36,7 +36,6 @@ const actions = {
     return new Promise((resolve, reject) => {
       signOrlogin.signUp({ email: email.trim(), password})
         .then(response => {
-          console.log(response)
           resolve(response)  
         })
         .catch(error => {

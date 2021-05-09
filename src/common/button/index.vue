@@ -1,16 +1,25 @@
 <template>
-  <div class="x-button">
+  <div class="x-button" :index="exerIndex" :character="character">
         <slot></slot>
   </div>  
 </template>
 
 <script>
 export default {
+  name: 'Button',
+  props: {
+    exerIndex: {
+      type: Number,
+      default: 1
+    },
+    character: String,
+  },
   data() {
     return {
 
     }
-  }
+  },
+ 
 }
 </script>
 

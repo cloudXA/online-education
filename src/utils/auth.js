@@ -13,6 +13,14 @@ class Token {
   removeToken() {
     return Cookies.remove(TokenKey)
   }
+
+  setUserInfo(userInfo) {
+    return Cookies.set('User', JSON.stringify(userInfo))
+  }
+
+  getUserInfo() {
+    return Cookies.get('User')
+  }
 }
 
 let tokenInstance = new Token();

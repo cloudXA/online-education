@@ -48,12 +48,10 @@ export default {
   },
   methods: {
     onSubmit() {
-      console.log(this.form, 'form')
       this.$refs.form.validate(valid => {
         if(valid) {
           this.$store.dispatch('user/login_vuex', this.form)
             .then((data) => {
-              debugger;
               this.$router.push({name: 'home'})
             })
         }

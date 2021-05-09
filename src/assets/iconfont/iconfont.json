@@ -1,0 +1,16 @@
+{
+  "id": "1395364",
+  "name": "icon",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "19954259",
+      "name": "收 藏 (1)",
+      "font_class": "shoucang1",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    }
+  ]
+}

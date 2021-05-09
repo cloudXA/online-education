@@ -36,8 +36,18 @@
 
 <script>
 import XButton from '../../../common/button/index';
-
+/**
+ * props: 
+ *  id: 接收basic 基础id(最底层的分类id)
+ * 组件功能：
+ *  获取底层题目分类下的所有题目，然后基于公司分类整合为多个模块，用户点击，
+ *  将所有题目id持久化本地，跳转到每个题目id详情(router: name:summary)。(题目详情中用户可以做题、
+ *  检查题目等等) 
+ * emit:
+ *  clickButton 事件，载荷为题目id列表idList
+ */
 export default {
+  name: 'InterView',
   components: {
     XButton,
   },

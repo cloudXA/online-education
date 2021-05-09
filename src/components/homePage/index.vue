@@ -20,6 +20,7 @@
 import SubNavbar from "@/components/subNavbar/index";
 import FilterNavbar from "./components/filter";
 import InterView from "./components/interview";
+import tokenInstance from '@/utils/auth';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -34,6 +35,9 @@ export default {
     return {
       id: ""
     };
+  },
+  created() {
+    console.log(tokenInstance.getUserInfo(), 'userid')
   },
   methods: {
     queryExerciseBasic(id) {
