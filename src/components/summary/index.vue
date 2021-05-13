@@ -3,10 +3,11 @@
     <nav-bar></nav-bar>
 
     <subject :exercise="exercise" 
-              :total="total" 
-              :order="exerciseIndex"
-              class="sub-container"
-              >
+        :total="total" 
+        :order="exerciseIndex"
+        class="sub-container"
+        :fresh="fresh"
+        >
     </subject>
 
     <div class="footer" @click="handleClick">
@@ -14,11 +15,16 @@
           v-if="exerciseIndex !== 1" 
           :exerIndex="exerciseIndex"
           character="last"
-      >
+          >
         上一题
       </x-button>
 
-      <x-button class="next" character="next" v-if="exerciseIndex !== total">下一题</x-button>
+      <x-button class="next" 
+          character="next" 
+          v-if="exerciseIndex !== total"
+          >
+        下一题
+      </x-button>
     </div>
     
   </div>  
@@ -28,7 +34,7 @@
 import NavBar from '../navbar/index';
 import Subject from './components/index';
 import XButton from '@/common/button/index.vue'
-
+import tokenInstance from '@/utils/auth';
 
 export default {
   name: 'Summary',
@@ -43,7 +49,9 @@ export default {
     return {
       exercise: {},
       total: 0,
-      exerciseIndex: 1
+      exerciseIndex: 1,
+      fresh: "",
+      isAll: 0
     }
   },
   computed: {
@@ -54,7 +62,6 @@ export default {
   watch: {
     exerId(newVal) {
       let idList = this.calculateExerId('content');
-      console.log(idList.indexOf(newVal), 'index')
       this.exerciseIndex = idList.indexOf(newVal) + 1;
     },
   },
@@ -62,21 +69,21 @@ export default {
    * exerciseIndex: this.$route.params.exerciseIdList
    */
   async created() {
-    this.renderData(this.$route.params.id);
-    
+    this.renderData(this.$route.params.id, this.isAll);
   },
 
   beforeRouteUpdate(to, from, next) {
-    this.renderData(to.params.id, this.exerciseIndex - 1)
+    this.renderData(to.params.id, this.isAll)
     next();
   },
 
   methods: {
-    async getExercise(id) {
+    async getExercise(id, isAll) {
       let result = await this.$ajax({
-                            url: `/api/exercise/${id}`,
+                            url: `/api/exercise/${id}/?answer=0`,
                             method: 'get'
                           })
+      
       return result.data.doc
     },
     /**
@@ -125,8 +132,8 @@ export default {
     /**
      * 初始化题目数据
      */
-    async renderData(id) {
-      this.exercise = await this.getExercise(id);
+    async renderData(id, isAll) {
+      this.exercise = await this.getExercise(id, isAll);
       this.total = this.calculateExerId('length');
     }
   }

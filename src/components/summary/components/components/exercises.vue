@@ -4,21 +4,28 @@
             <li>
                 <span class="serial">{{ serial }}、</span>
                 <span class="title">{{ render.title }}</span>
-                <ul class="choose-container"  @click="handleSubmit($event)">
-                  <li v-for="item, i in render.choose" :key="i" 
-                      :class="[checkSolution(render, item), ]"
-                        >
-                    <!-- <input :type="mapInput(render)" :name="i"
-                            v-if="!render.replay" :id="i"
-                            :value="Object.keys(item)[0].toUpperCase()" 
-                        >  -->
 
-                    <x-input :type="mapInput(render)" :state="'error'"></x-input>
+                <ul class="choose-container" >
+                  <li v-for="item, i in render.choose" 
+                      :key="i" 
+                      :class="[checkSolution(render, item)]"
+                      @click="selectChoose($event, i)"
+                      >
+
+                    <x-input :type="mapType(render)" 
+                      :value="Object.keys(item)[0].toUpperCase()" 
+                      :ref="'xInput' + i" 
+                      >    
+
+                    </x-input>
 
                     <span class="input-span"></span>    
 
                     <span>{{ Object.keys(item)[0].toUpperCase() }}、</span>
-                    <label :for="Object.values(item)[0]">{{ Object.values(item)[0] }}</label>
+
+                    <label :for="Object.values(item)[0]">
+                      {{ Object.values(item)[0] }}
+                    </label>
                     
                   </li>
                 </ul>
@@ -32,13 +39,15 @@
 /**
  * props: 
  *  render: 需要渲染的某一个题目数据
- *  serial: 所有的需要渲染的题目数量
+ *  serial: 所有的需要渲染的题目序号
  * 
  * 功能:
  *  能够将用户针对题目 && 用户id关联的题目id && 该题目下用户选中选项的添加。页面刷新，数据持久化，
  *  题目答案回显。解析、答案、错误信息样式展示。 
  */
-import XInput from '@/common/z-input/index'
+import XInput from '@/common/z-input/index';
+import tokenInstance from '@/utils/auth';
+
 const propMap = [
   {
     index: "1",
@@ -72,31 +81,40 @@ export default {
         serial: {
           type: Number,
           default: 1
-        }
+        },
+        fresh: String
     },
     data() {
         return {
-
+          state: "", // success \ warning \ error \ common
         }
     },
-
-    created() {
-      console.log('hi')
+    watch: {
+      render: {
+        handler() {
+          // 在元素渲染之后调用
+          this.$nextTick(() => {
+            this.clearSelect();
+          })
+          
+        }
+      }
     },
-
+    created() {
+    },
+    
     methods: {
       checkSolution(render, item) {
         let state;
         let choose = Object.keys(item)[0];
         switch(render.property) { 
           case 1:  // 单选
-            if (render.solution.includes(choose)) {
+            if (render.solution && render.solution.includes(choose)) {
               state = 'is-active'
             };
             break;
           case 2:  // 多选  TODO: 后端返回replay
-            render.solution.join();
-            render.replay
+            render.solution && render.solution.join();
 
         }
         return state;
@@ -106,24 +124,54 @@ export default {
       checkError(render, choose) {
         let replay = render.replay
         replay.forEach(item => {
-          return !render.solution.includes(replay);
+          return render.solution && !render.solution.includes(replay);
         })
         
       },
 
-      mapInput(render) {
+      mapType(render) {
         return inputTypeMap.filter(item => {
           return item.property == render.property
         })[0].type
       },
 
-      handleSubmit(event) {
-        console.log(event.target, 'event')
-        // TODO: 提交
-        // this.$ajax({
-        //   url: 
-        // })
+      async selectChoose(event, index) {
+        let target = this.$refs['xInput' + index][0];
+
+        if(target.type === 'radio') {
+          this.clearSelect();
+        }
+
+        target.innerState = "success";
+
+
+        // console.log(target.value, 'value')
+        // TODO: 用户id 题目id 选项,请求路由参数选择
+        let id = this.render._id;   // 题目id
+        let userId = JSON.parse(tokenInstance.getUserInfo());  // 用户信息id
+        console.log(userId, 'userId')
+        let value = target.value; // 题目信息
+        await this.$ajax({
+                url: `/api/user/userAddReply`,
+                method: 'post',
+                data: {
+                  exerId: id,
+                  userId: userId,
+                  reply: value
+                }
+              })
+
+      },
+
+      /**
+       * 清空选中效果
+       */
+      clearSelect() {
+        this.render.choose.forEach((item,index) => {
+            this.$refs['xInput' + index][0].innerState = ""
+          })
       }
+      
     }
 }
 </script>

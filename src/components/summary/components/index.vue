@@ -23,14 +23,9 @@
             </header>
             <!-- 单个题目的题目信息 + 选中逻辑请求 + 选项信息回显  -->
             <main>
-                <!-- <keep-alive> -->
-                    <exercise :render="exercise"></exercise>
-                <!-- </keep-alive> -->
-                
+                <exercise :render="exercise" :serial="order"></exercise>
             </main>
-            <!-- <footer class="footer">
-                
-            </footer> -->
+            
         </div>
         <div></div>
     </div>
@@ -66,7 +61,7 @@ const propertyMap = [
 ]
 
 export default {
-    name: 'Subject',
+    name: 'Subject', // 题目（头部索引 + 题目）
     components: {
         Exercise,
     },
@@ -77,6 +72,7 @@ export default {
         },
         total: Number,
         order: Number,
+        fresh: String  // 用于刷新选项
     },
     data() {
         return {

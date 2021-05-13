@@ -7,7 +7,6 @@ import "./assets/iconfont/iconfont.css";
 import request from './utils/request.js';
 Vue.prototype.$ajax = request;
 
-import axios from 'axios';
 
 import Element from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
@@ -21,7 +20,7 @@ import '../mock';
 Vue.config.productionTip = false;
 
 Vue.use(Element);
-Vue.prototype.$http = axios; 
+
 
 new Vue({
   el: '#app',

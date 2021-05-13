@@ -1,7 +1,7 @@
 <template>
-    <div class="container">
-        <span :class="[type, state]">
-            <span class="pitch"></span>
+    <div class="container" @click="pitchSubmit($event)" >
+        <span :class="[type, state, innerState]" :value="value" ref="choose">
+            <span class="pitch" :value="value"></span>
         </span>
     </div>
 </template>
@@ -11,12 +11,24 @@ export default {
     name: 'x-input',
     data() {
         return {
-
+            innerState: "",   // common  
+            
         }
     },
     props: {
         type: String,  // radio 单选 checked 多选
-        state: String  // success 、 warning 、 error 
+        value: String,    // 选项值
+        state: ""
+
+    },
+    methods: {
+        pitchSubmit(event) {
+                // if(this.type === 'radio') {
+                //     console.log(this.$refs['choose'].className = "radio")
+                // }
+                // this.innerState = 'success'
+                // this.$emit('chooseSubmit', event.target.getAttribute('value'))
+        }
     }
 }
 </script>
@@ -25,6 +37,7 @@ export default {
     $success: #586AEA;
     $warning: #ffcc00;
     $error: #cc3300;
+    $common: #cccccc;
 
     @mixin map-radio($color) {
         display: flex;
@@ -83,6 +96,9 @@ export default {
         .error.radio {
             @include map-radio($error)
         }
+        .common.radio {
+            @include map-radio($common)
+        }
 
         // 多选
         .success.checkbox {
@@ -94,7 +110,6 @@ export default {
         .error.checkbox {
             @include map-checkbox($error)
         }
-
 
         
     }
