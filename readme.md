@@ -66,7 +66,32 @@ const User = {
 #### `main.js`:
 - 该脚本
 + 1.  通过原型拓展Vue构造函数的功能：`axios`封装`./utils/request`，
-+ 2. 引入vue全家桶vue-router、vuex作为new Vue()的参数，vue实例化（▶*实例化内部vue做了什么事情*）后将编译成render函数❓*将vue-router匹配的首页组件`home/index.vue`编译成render函数，然后挂载在引入的App.vue中的id为app的element中*❓。
-+ 3. `import`引入`element`,Vue.use()*❓使用element-ui组件❓*, import 引入公共scss样式，import 引入`./permission.js`（▶*vue组件全局路由钩子*）*❓引入的机制和在vue内部的实现如何❓*拓展vue实例功能。
-  TODO: 点击跳转到详情
++ 2. 引入vue全家桶vue-router、vuex作为new Vue()的参数，vue实例化（▶*实例化内部vue做了什么事情*）后将编译成render函数[将vue-router匹配的首页组件`home/index.vue`编译成render函数，然后挂载在引入的App.vue中的id为app的element中](#render内部渲染)。
++ 3. `import`引入`element`,Vue.use(element)❓使用element-ui组件, import 引入公共scss样式，[import 引入`./permission.js`](#`permission.js`)（▶**vue组件全局路由钩子**）❓引入的机制和在vue内部的实现如何拓展vue实例功能。
+
+#### render内部渲染
+#### `permission.js`
+  `permission.js`定义了全局路由钩子。通过工具函数获取存储在本地cookie中的token;当存在token后，访问登录页，直接重定向`path:/`,访问别的页面直接放行。当不存在token时，如果要访问的路径不在白名单中，重定向到登录页;存在白名单中时，直接放行。
+  ```javascript
+  import router from './router/index.js';
+  // import store from './store/index.js';
+  import tokenInstance from './utils/auth.js';  // 从cookie获取token
+
+  const whiteList = ['/login', '/', '/sign', '/register'];   // 路由白名单
+
+  router.beforeEach((to, from, next) => { 
+    const hasToken = tokenInstance.getToken();
+   
+    if(hasToken) {
+      if(to.path == '/login') {
+        next({ path: '/' })
+      } else {
+        next();  
+      }
+    } else {
+      whiteList.indexOf(to.path) !== -1 ? next() : next({ path: '/login'})
+    }
+  })
+  ```
+
 ### 项目中涉及到技术分析
