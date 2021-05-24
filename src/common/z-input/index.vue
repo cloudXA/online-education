@@ -1,35 +1,37 @@
 <template>
-    <div class="container" @click="pitchSubmit($event)" >
-        <span :class="[type, state, innerState]" :value="value" ref="choose">
+    <div class="container">
+        <span :class="[type, innerState, selectedState]" :value="value" ref="choose">
             <span class="pitch" :value="value"></span>
         </span>
+        <slot></slot>
     </div>
 </template>
-
+ 
 <script>
 export default {
     name: 'x-input',
+    
+    props: {
+        type: String,           // radio 单选 checked 多选
+        value: String,          // 选项值
+        index: Number,
+    },
     data() {
         return {
-            innerState: "",   // common  
-            
+            selectedState: "",
+            innerReply: this.$attrs.reply
         }
     },
-    props: {
-        type: String,  // radio 单选 checked 多选
-        value: String,    // 选项值
-        state: ""
+    computed: {
+        innerState() {
+            if(this.value === this.$attrs.reply && this.type !== "") {
+                return 'success'
+            } 
+        }
+    },
 
-    },
-    methods: {
-        pitchSubmit(event) {
-                // if(this.type === 'radio') {
-                //     console.log(this.$refs['choose'].className = "radio")
-                // }
-                // this.innerState = 'success'
-                // this.$emit('chooseSubmit', event.target.getAttribute('value'))
-        }
-    }
+
+    
 }
 </script>
 

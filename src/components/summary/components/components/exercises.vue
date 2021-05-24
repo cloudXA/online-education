@@ -3,22 +3,24 @@
         <ul class="sub-know-container">
             <li>
                 <span class="serial">{{ serial }}、</span>
-                <span class="title">{{ render.title }}</span>
 
+                <span class="title">{{ localRender.title }}</span>
                 <ul class="choose-container" >
-                  <li v-for="item, i in render.choose" 
+                  <li v-for="item, i in localRender.choose" 
                       :key="i" 
-                      :class="[checkSolution(render, item)]"
+                      :class="[checkSolution(localRender, item)]"
                       @click="selectChoose($event, i)"
-                      >
+                  >
 
-                    <x-input :type="mapType(render)" 
+                    <x-input 
+                      :type="mapType(localRender)" 
                       :value="Object.keys(item)[0].toUpperCase()" 
                       :ref="'xInput' + i" 
-                      >    
-
+                      :id="'xInput' + i"
+                      :index="i"
+                      :reply="localRender.reply"
+                    >   
                     </x-input>
-
                     <span class="input-span"></span>    
 
                     <span>{{ Object.keys(item)[0].toUpperCase() }}、</span>
@@ -28,6 +30,8 @@
                     </label>
                     
                   </li>
+
+
                 </ul>
             </li>
         </ul>
@@ -36,26 +40,9 @@
 </template>
 
 <script>
-/**
- * props: 
- *  render: 需要渲染的某一个题目数据
- *  serial: 所有的需要渲染的题目序号
- * 
- * 功能:
- *  能够将用户针对题目 && 用户id关联的题目id && 该题目下用户选中选项的添加。页面刷新，数据持久化，
- *  题目答案回显。解析、答案、错误信息样式展示。 
- */
 import XInput from '@/common/z-input/index';
 import tokenInstance from '@/utils/auth';
 
-const propMap = [
-  {
-    index: "1",
-    type: "single",
-    header: "A",
-    isActive: false,
-  }
-]
 
 const inputTypeMap = [
   {
@@ -82,26 +69,31 @@ export default {
           type: Number,
           default: 1
         },
-        fresh: String
+        fresh: String,
+        reply: String
     },
     data() {
         return {
           state: "", // success \ warning \ error \ common
+          innerReply: "",
+          localRender: {}
         }
     },
+
     watch: {
       render: {
-        handler() {
-          // 在元素渲染之后调用
-          this.$nextTick(() => {
-            this.clearSelect();
-          })
-          
-        }
+        handler(newVal) {
+          this.localRender = newVal;
+        },
+        deep: true,
+        immediate: true
       }
     },
+
     created() {
     },
+
+
     
     methods: {
       checkSolution(render, item) {
@@ -113,7 +105,7 @@ export default {
               state = 'is-active'
             };
             break;
-          case 2:  // 多选  TODO: 后端返回replay
+          case 2:  // 多选  
             render.solution && render.solution.join();
 
         }
@@ -137,20 +129,16 @@ export default {
 
       async selectChoose(event, index) {
         let target = this.$refs['xInput' + index][0];
+        let id = this.localRender._id;   // 题目id
+        let userId = JSON.parse(tokenInstance.getUserInfo());  // 用户信息id
+        let value = target.value; // 题目信息
 
         if(target.type === 'radio') {
-          this.clearSelect();
+          this.$set(this.localRender, 'reply', "")
         }
+       
+        this.$set(this.localRender, 'reply', value)
 
-        target.innerState = "success";
-
-
-        // console.log(target.value, 'value')
-        // TODO: 用户id 题目id 选项,请求路由参数选择
-        let id = this.render._id;   // 题目id
-        let userId = JSON.parse(tokenInstance.getUserInfo());  // 用户信息id
-        console.log(userId, 'userId')
-        let value = target.value; // 题目信息
         await this.$ajax({
                 url: `/api/user/userAddReply`,
                 method: 'post',
@@ -160,19 +148,20 @@ export default {
                   reply: value
                 }
               })
-
       },
 
       /**
        * 清空选中效果
        */
       clearSelect() {
-        this.render.choose.forEach((item,index) => {
-            this.$refs['xInput' + index][0].innerState = ""
+        this.localRender.choose.forEach((item,index) => {
+            this.$el.querySelector('#xInput' + index).children[0].classList.remove('success')
           })
       }
       
-    }
+    },
+
+
 }
 </script>
 

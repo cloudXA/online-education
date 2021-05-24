@@ -95,3 +95,60 @@ const User = {
   ```
 
 ### 项目中涉及到技术分析
+#### 试图修改子组件中计算属性的值
+##### 父组件
+```javascript
+ /**
+ * 清空选中效果
+ */
+clearSelect() {
+  this.render.choose.forEach((item,index) => {
+      let target = this.$refs['xInput' + index][0];
+      target.innerState = ""
+    })
+}
+```
+#### 子组件
+```JavaScript
+computed: {
+    innerState() {
+        console.log(this.value, this.reply, 'hi')
+        if(this.value === this.reply) {
+            return 'success'
+        } 
+    }
+}
+```
+#### 报错:
+![](./src/assets/images/err0.png)
+#### 解决方案
+![](./src/assets/images/sou1.png)
+因为本人的**computed**不依赖**data**属性，所以❓<span style="border-bottom: 1px solid">即便设置set估计也不会响应式触发</span>所以暂时弃用computed，使用**methods**。嗯~🤔有些牵强，毕竟computed也是依赖props属性的，props也是响应式属性呢。但是props规范并不支持被修改呢。
+### **连续组件传值**
+![](./src/assets/images/com.png)
+组件传值的时候，父组件定义的初始值和经过ajax或者别的方式更改的值都会传入到子组件中。如果子组件将接收到的props值非直接渲染，而是通过将props值赋值给data中的属性值的话，那么将会出现无法渲染数据的问题。❓<span style="border-bottom: 1px solid ">原因在于经过data、props的属性初始化一次，并不会监听传入的值的变化</span>你会问了，为什么直接在`<template></template>`模板能够动态监听到props的变化，并渲染呢。原因嘛：<span style="border-bottom: 1px solid ">😂等后面需要的时候在去研究</span>。言归正传：解决方案就是使用watch监听props值的变化喽。
+### **将props值保存到本地**
+所有的 prop 都使得其父子 prop 之间形成了一个单向下行绑定：父级 prop 的更新会向下流动到子组件中，但是反过来则不行。这样会防止从子组件意外变更父级组件的状态，从而导致你的应用的数据流向难以理解。
+
+额外的，每次父级组件发生变更时，子组件中所有的 prop 都将会刷新为最新的值。这意味着你不应该在一个子组件内部改变 prop。如果你这样做了，Vue 会在浏览器的控制台中发出警告。
+
+这里有两种常见的试图变更一个 prop 的情形：
+1. **这个 prop 用来传递一个初始值；这个子组件接下来希望将其作为一个本地的 prop 数据来使用**。在这种情况下，最好定义一个本地的 data property 并将这个 prop 用作其初始值：
+```javascript
+props: ['initialCounter'],
+data: function () {
+  return {
+    counter: this.initialCounter
+  }
+}
+```
+2. **这个 prop 以一种原始的值传入且需要进行转换**。在这种情况下，最好使用这个 prop 的值来定义一个计算属性：
+```javascript
+props: ['size'],
+computed: {
+  normalizedSize: function () {
+    return this.size.trim().toLowerCase()
+  }
+}
+```
+>>> 注意在 JavaScript 中对象和数组是通过引用传入的，所以对于一个数组或对象类型的 prop 来说，在子组件中改变变更这个对象或数组本身将会影响到父组件的状态。

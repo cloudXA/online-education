@@ -1,7 +1,6 @@
 <template>
     <div>
         <div>
-            <!-- 单个题目的头部--- 类型 + 当前索引/总的数量 -->
             <header>
                 <ul class="header">
                     <li :class="calculateMap(exercise, 'class')">
@@ -21,9 +20,12 @@
                     </li>
                 </ul>
             </header>
-            <!-- 单个题目的题目信息 + 选中逻辑请求 + 选项信息回显  -->
             <main>
-                <exercise :render="exercise" :serial="order"></exercise>
+                <exercise 
+                    :render="localExercise" 
+                    :serial="order"
+                >
+                </exercise>
             </main>
             
         </div>
@@ -72,15 +74,25 @@ export default {
         },
         total: Number,
         order: Number,
-        fresh: String  // 用于刷新选项
+        fresh: String,  // 用于刷新选项
+        
     },
     data() {
         return {
-
+            localExercise: {}
         }
     },
     computed: {
         
+    },
+    watch: {
+         exercise: {
+             handler(newVal) {
+                this.localExercise = newVal; 
+             },
+             deep: true,
+             immediate: true
+         }
     },
     methods: {
         calculateMap(exercise, distribute) {
@@ -89,7 +101,7 @@ export default {
                 return propertyMap.filter(item => item.property === exercise.property)[0][distribute]
             }
         }
-    } 
+    },
 
 }
 </script>
