@@ -1,0 +1,492 @@
+[
+    {
+        "choose": [
+            {
+                "a": "生物学的角度是将物品的能量转化为对生物有用的一种方式"
+            },
+            {
+                "b": "吃饭"
+            },
+            {
+                "c": "喝酒"
+            },
+            {
+                "d": "运动"
+            }
+        ],
+        "solution": [
+            "a"
+        ],
+        "likes": 1,
+        "views": 162,
+        "comments": [],
+        "isLiked": true,
+        "_id": "604c64467aee3d4638c8dad5",
+        "title": "消费的定义是什么？",
+        "analysis": "消费的定义就是生物学的傻傻爱好",
+        "property": 1,
+        "type": 1,
+        "__v": 0,
+        "company": "大米"
+    },
+    {
+        "choose": [
+            {
+                "a": "生物学的角度是将物品的能量转化为对生物有用的一种方式"
+            },
+            {
+                "b": "吃饭"
+            },
+            {
+                "c": "喝酒"
+            },
+            {
+                "d": "运动"
+            }
+        ],
+        "solution": [
+            "b"
+        ],
+        "likes": 0,
+        "views": 162,
+        "comments": [],
+        "isLiked": false,
+        "_id": "604c69417aee3d4638c8dad6",
+        "title": "生产的定义是什么？",
+        "analysis": "消费的定义就是生物学的傻傻爱好",
+        "property": 1,
+        "type": 1,
+        "__v": 0,
+        "company": "大米"
+    },
+    {
+        "choose": [
+            {
+                "a": "生物学的角度是将物品的能量转化为对生物有用的一种方式"
+            },
+            {
+                "b": "吃饭"
+            },
+            {
+                "c": "喝酒"
+            },
+            {
+                "d": "运动"
+            }
+        ],
+        "solution": [
+            "b",
+            "c"
+        ],
+        "likes": 0,
+        "views": 162,
+        "comments": [],
+        "isLiked": false,
+        "_id": "604db9133cd70d4dbce5a4e8",
+        "title": "通胀的定义是什么？",
+        "analysis": "消费的定义就是生物学的傻傻爱好",
+        "property": 2,
+        "type": 1,
+        "__v": 0,
+        "company": "大米"
+    },
+    {
+        "choose": [
+            {
+                "0": "错"
+            },
+            {
+                "1": "对"
+            }
+        ],
+        "solution": [
+            "0"
+        ],
+        "likes": 0,
+        "views": 162,
+        "comments": [],
+        "isLiked": false,
+        "_id": "604dc3303cd70d4dbce5a4e9",
+        "title": "该不该奔跑？",
+        "analysis": "消费的定义就是生物学的傻傻爱好",
+        "property": 3,
+        "type": 1,
+        "__v": 0,
+        "company": "大米"
+    },
+    {
+        "choose": [
+            {
+                "0": "错"
+            },
+            {
+                "1": "对"
+            }
+        ],
+        "solution": [
+            "0"
+        ],
+        "likes": 0,
+        "views": 162,
+        "comments": [
+            "605a13a2511eff227028c1e6",
+            "605a13ce511eff227028c1e7"
+        ],
+        "isLiked": false,
+        "_id": "604df7e72d15325170a87285",
+        "title": "该不该奔跑？",
+        "analysis": "消费的定义就是生物学的傻傻爱好",
+        "shortSolution": "啊啊啊，中国",
+        "property": 4,
+        "type": 1,
+        "__v": 2,
+        "company": "大米"
+    },
+    {
+        "choose": [
+            {
+                "a": "done"
+            },
+            {
+                "b": "fail"
+            },
+            {
+                "c": "always"
+            },
+            {
+                "d": "then"
+            }
+        ],
+        "solution": [
+            "a"
+        ],
+        "likes": 0,
+        "views": 86,
+        "comments": [],
+        "isLiked": false,
+        "_id": "606a7c27356a0331ac750f2c",
+        "title": "下列promise所提供的方法中，用来向成功或失败的回调函数队列中添加回调函数的是",
+        "analysis": "then:分别向doneList和failList中添加回调函数；always：添加一个无论成功还是失败都会调用的回调函数",
+        "property": 1,
+        "type": 1,
+        "company": "京东",
+        "__v": 0
+    },
+    {
+        "choose": [
+            {
+                "a": "el.className='aaa'"
+            },
+            {
+                "b": "el.tagName='p'"
+            },
+            {
+                "c": "el.innerHTML=''"
+            },
+            {
+                "d": "el.id='id2'"
+            }
+        ],
+        "solution": [
+            "b"
+        ],
+        "likes": 0,
+        "views": 86,
+        "comments": [],
+        "isLiked": false,
+        "_id": "606a7e3c356a0331ac750f2d",
+        "title": "el是一个id='id1'的div元素，以下哪行代码会执行失败",
+        "analysis": "A. className属性设置或返回元素的class属性。获取属性值：HTMLElementObject.className; 设置属性值：HTMLElementObject.className=className;B.tagName返回元素的标签名。HTML返回tagName属性的值是大写的。C.innerHTML属性设置或返回表格行的开始和结束标签之间的HTML。D.id属性设置或返回元素的id",
+        "property": 1,
+        "type": 1,
+        "company": "京东",
+        "__v": 0
+    },
+    {
+        "choose": [
+            {
+                "a": "promise.all(iterable),参数是一个数组"
+            },
+            {
+                "b": "只有这个数组的所有promise实例都resolve之后才会触发其返回的promise实例的then"
+            },
+            {
+                "c": "只要其中有任何一个promise实例被reject，那么最终的promise实例将触发catch"
+            },
+            {
+                "d": "触发then时可以只带上iterable参数中的部分值，也可以带所有值"
+            }
+        ],
+        "solution": [
+            "d"
+        ],
+        "likes": 0,
+        "views": 86,
+        "comments": [],
+        "isLiked": false,
+        "_id": "606a8051356a0331ac750f2e",
+        "title": "关于promise.all的方法说法错误的是",
+        "analysis": "iterable是一个全部为promise对象的数组，只要数组中有一个promise实例被reject，那么最终的promise触发catch，只有数组中全部promise实例都resolve才会触发then，并且要带上iterable中全部promise，其中promise实例将会被结果代替",
+        "property": 1,
+        "type": 1,
+        "company": "京东",
+        "__v": 0
+    },
+    {
+        "choose": [
+            {
+                "a": "alert(3==true)"
+            },
+            {
+                "b": "2=='2'"
+            },
+            {
+                "c": "null==undefined"
+            },
+            {
+                "d": "isNaN('true')"
+            }
+        ],
+        "solution": [
+            "a"
+        ],
+        "likes": 0,
+        "views": 86,
+        "comments": [],
+        "isLiked": false,
+        "_id": "606a81c4356a0331ac750f2f",
+        "title": "以下哪个语句打印出来的结果是false",
+        "analysis": "a: 1== true布尔值会转换成number true为1所以结果为true，c: javascript规定null和undefined相等，isNaN用于检查其参数是否是非数字值",
+        "property": 1,
+        "type": 1,
+        "company": "京东",
+        "__v": 0
+    },
+    {
+        "choose": [
+            {
+                "a": "concat"
+            },
+            {
+                "b": "splice()"
+            },
+            {
+                "c": "map()"
+            },
+            {
+                "d": "sort()"
+            }
+        ],
+        "solution": [
+            "a",
+            "c"
+        ],
+        "likes": 0,
+        "views": 84,
+        "comments": [],
+        "isLiked": false,
+        "_id": "606a8328356a0331ac750f30",
+        "title": "以下哪些Array对象的方法不会更改原有数组",
+        "analysis": "会改变数组的方法push() pop() shift() unshift() splice() sort() reverse() 不会改变数组的方法 filter() concat() slice() map() ",
+        "property": 2,
+        "type": 1,
+        "company": "360",
+        "__v": 0
+    },
+    {
+        "choose": [
+            {
+                "a": "back回到浏览器载入历史URL地址列表的当前URL的前一个URL"
+            },
+            {
+                "b": "go表示刷新当前页面"
+            },
+            {
+                "c": "length保存历史URL地址列表的长度信息"
+            },
+            {
+                "d": "forward转到浏览器载入历史URL地址列表的当前URL的下一个URL"
+            }
+        ],
+        "solution": [
+            "a",
+            "d"
+        ],
+        "likes": 0,
+        "views": 84,
+        "comments": [],
+        "isLiked": false,
+        "_id": "606a850e356a0331ac750f31",
+        "title": "关于history对象的属性或方法表述正确的是",
+        "analysis": "浏览器内置对象管理模型，简称bom(browser object model)中的history属性和方法length 返回浏览器历史列表的URL数量，back()加载history列表中的前一个URL，forward加载history列表下一个URL。go()加载history列表中的某个具体页面。",
+        "property": 2,
+        "type": 1,
+        "company": "360",
+        "__v": 0
+    },
+    {
+        "choose": [
+            {
+                "a": "bar"
+            },
+            {
+                "b": "报错"
+            },
+            {
+                "c": "foo"
+            },
+            {
+                "d": "undefined"
+            }
+        ],
+        "solution": [
+            "c"
+        ],
+        "likes": 0,
+        "views": 84,
+        "comments": [],
+        "isLiked": false,
+        "_id": "606a8863356a0331ac750f32",
+        "title": "function A() { this.do = function() {return 'foo'}} A.prototype = function(){ this.do = function() { return 'bar'} } var x = new A().do(); x的值是：",
+        "analysis": "只有实例对象上不存在的属性和方法才会去原型上查找",
+        "property": 1,
+        "type": 1,
+        "company": "360",
+        "__v": 0
+    },
+    {
+        "choose": [
+            {
+                "a": "undefined"
+            },
+            {
+                "b": "number"
+            },
+            {
+                "c": "interface"
+            },
+            {
+                "d": "symbol"
+            }
+        ],
+        "solution": [
+            "a",
+            "b",
+            "d"
+        ],
+        "likes": 0,
+        "views": 84,
+        "comments": [],
+        "isLiked": false,
+        "_id": "606a8a4e356a0331ac750f33",
+        "title": "以下属于js基本数据类型的选项是()",
+        "analysis": "JavaScript语言的6种原始数据类型：undefind,null,boolean,string,number,symbol。引用类型object除了null，其余原始数据类型都可由typeof判断，针对引用类型可以用instanceof判断",
+        "property": 2,
+        "type": 1,
+        "company": "360",
+        "__v": 0
+    },
+    {
+        "choose": [],
+        "solution": [
+            "a",
+            "b",
+            "d"
+        ],
+        "likes": 0,
+        "views": 82,
+        "comments": [],
+        "isLiked": false,
+        "_id": "606ad621356a0331ac750f34",
+        "title": "对BFC规范的理解？",
+        "analysis": "BFC是一个独立的布局环境，可以理解为一个容器，在这个容器中按照一定规则进行物品摆放，并且不会影响其他环境中的物品。如果一个元素触发BFC的条件，则BFC中元素布局不受外部影响。浮动元素会创建BFC，则浮动元素内部子元素主要受该浮动元素影响，所以两个浮动元素之间是互不影响的",
+        "shortSolution": "BFC是一个独立的布局环境，可以理解为一个容器，在这个容器中按照一定规则进行物品摆放，并且不会影响其他环境中的物品。如果一个元素触发BFC的条件，则BFC中元素布局不受外部影响。浮动元素会创建BFC，则浮动元素内部子元素主要受该浮动元素影响，所以两个浮动元素之间是互不影响的",
+        "property": 4,
+        "type": 1,
+        "company": "360",
+        "__v": 0
+    },
+    {
+        "choose": [],
+        "solution": [
+            "a",
+            "b",
+            "d"
+        ],
+        "likes": 0,
+        "views": 80,
+        "comments": [],
+        "isLiked": false,
+        "_id": "606adaf2356a0331ac750f35",
+        "title": "请你谈谈cookie的弊端",
+        "analysis": "cookie虽然在持久保存客户端数据提供了方便，分担了服务器存储的负担，但还是由很多局限性的。每个特定的域名下最多生成20个cookie。cookie的最大大约为4096字节，为了兼容性，一般不超过4095字节。优点：极高的扩展性和可用性。1.通过良好的编程，控制保存在cookie中的session对象的大小。2.通过加密和安全传输技术（ssl）,减少cookie被破解的可能性。3.只在cookie中存在不敏感数据，计时被盗也不会有重大损失。4.控制cookie的声明器，使之不会永远有效。偷盗者很可能拿到一个过期的cookie。缺点： 1. cookie数量和长度的限制。每个domain最多只能有20条cookie，每个cookie长度不能超过4kb，否则会被截掉。2.安全性问题。如果cookie被人拦截了，那人就可以取得所有的session信息。计时加密也于事无补，他只要原样转发cookie就可以达到目标了。3.有些状态不可以保存在客户端。例如，为了重复提交表单，我们需要在服务器保存一个计数器。如果我们把这个计数器保存在客户端，那么起不到任何作用",
+        "shortSolution": "cookie虽然在持久保存客户端数据提供了方便，分担了服务器存储的负担，但还是由很多局限性的。每个特定的域名下最多生成20个cookie。cookie的最大大约为4096字节，为了兼容性，一般不超过4095字节。优点：极高的扩展性和可用性。1.通过良好的编程，控制保存在cookie中的session对象的大小。2.通过加密和安全传输技术（ssl）,减少cookie被破解的可能性。3.只在cookie中存在不敏感数据，计时被盗也不会有重大损失。4.控制cookie的声明器，使之不会永远有效。偷盗者很可能拿到一个过期的cookie。缺点： 1. cookie数量和长度的限制。每个domain最多只能有20条cookie，每个cookie长度不能超过4kb，否则会被截掉。2.安全性问题。如果cookie被人拦截了，那人就可以取得所有的session信息。计时加密也于事无补，他只要原样转发cookie就可以达到目标了。3.有些状态不可以保存在客户端。例如，为了重复提交表单，我们需要在服务器保存一个计数器。如果我们把这个计数器保存在客户端，那么起不到任何作用",
+        "property": 4,
+        "type": 1,
+        "company": "360",
+        "__v": 0
+    },
+    {
+        "choose": [
+            {
+                "a": "Array.from(A)"
+            },
+            {
+                "b": "[].slice.apply(A)"
+            },
+            {
+                "c": "[...A]"
+            },
+            {
+                "d": "[].map.call(A, o => o)"
+            }
+        ],
+        "solution": [
+            "a",
+            "b",
+            "c",
+            "d"
+        ],
+        "likes": 0,
+        "views": 78,
+        "comments": [],
+        "isLiked": false,
+        "_id": "606ae14a356a0331ac750f36",
+        "title": "以下哪些选项可以将集合A转化为数组？",
+        "analysis": "Array.from(arr, mapfn, thisArg)方法，用于将两类可以把对象转换为真正的数组：类似数组的对象和可遍历的对象（部署了iterator接口的，String，ES6新增的Map和Set）。可以传3个参数，其中第一个是数组，必传；第二个是一个函数（类似map函数），对数组元素进行操作后在返回数组，可选；第三个是对于this关键字的指向，可选。slice()方法可从已有的数组中返回选定的元素。返回值：返回一个新的数组，包括从start到end的arrayObject中的元素。该方法并不会修改数组，而是返回一个子数组。如果想删除数组的一段元素，应该使用方法Array.splice().所以在这里就是对集合A应用slice，返回一个新的数组，不对数组做任何改变。展开运算符，把A集合的元素展开后，用[]承接，返回新的数组。map()方法返回一个新数组，数组中的元素为原始数组元素调用函数处理后的值。map()方法按照原始数组元素顺序依次处理元素。map()不会对空数组进行检测。map()不会改变原始数组",
+        "property": 2,
+        "type": 1,
+        "company": "小米",
+        "__v": 0
+    },
+    {
+        "choose": [
+            {
+                "a": "typeof myObj == 'undefined'"
+            },
+            {
+                "b": "myObj === undefined"
+            },
+            {
+                "c": "myObj === null"
+            },
+            {
+                "d": "!this.hasOwnProperty('myObj')"
+            }
+        ],
+        "solution": [
+            "c"
+        ],
+        "likes": 0,
+        "views": 78,
+        "comments": [],
+        "isLiked": false,
+        "_id": "606ae4e3356a0331ac750f37",
+        "title": "判断对象myObj是否存在的写法，下面说法错误的是",
+        "analysis": "前提是myobj是一个对象，只是存在与不存在的问题，1. ！obj 2. !window.obj 3. typeof myObj == 'undefined'(判断对象是否有定义，已定义未赋值返回true) 4. myObj == undefined (已定义未赋值，返回true)5.myObj === undefined(已定义未赋值，返回true) 6.!this.hasOwnProperty('myObj')(判断是否为顶层对象的一个属性) 7.myobj == null(注意null与undefined的区别，null值的是已经复制为null的空对象，记这个对象实际上是有值的，而undefined指的是不存在或没有复制的对象)",
+        "property": 1,
+        "type": 1,
+        "company": "小米",
+        "__v": 0
+    }
+]

@@ -1,30 +1,88 @@
 <template>
-  <div class="knowledge">
-    <!-- 知识题库（带有解析） -->
-      <question-tip></question-tip>
+  <div class="knowledeg_container">
+      <ul class="sub-know-container">
+        <li v-for="(item, index) in renderData" :key="index">
+          <exercise
+              :render="item"
+              :serial="index + 1"
+              :property="String(item.property)"
+              :isInput="isInput"
+              ref="exercise"
+          >
+          </exercise>
+        </li>
+      </ul>
+
+
   </div>
 </template>
 
 <script>
-import QuestionTip from './components/index'
+// import QuestionTip from './components/index'
+import Exercise from '@/common/exercise/index'
 
 export default {
   name: "knowledge",
   components: {
-    QuestionTip
+    // QuestionTip,
+    Exercise
   },
   data() {
     return {
+      renderData: "",
+      isInput: false   // 不展示题目选项前面的选中按钮
+    }
+  },
 
+  created() {
+    this.queryExercise();
+  },
+
+  methods: {
+    handleLike(event, id, isLiked) {
+      if(isLiked) {
+        this.$ajax({
+          url: '/api/likes/cancel',
+          method: 'post',
+          data: {id}
+        })
+        .then(() => {
+          this.queryExercise();
+        })
+
+      } else {
+        this.$ajax({
+          url: '/api/likes/add',
+          method: 'post',
+          data: {id}
+        })
+        .then(() => {
+          this.queryExercise();
+        })
+      }
+    },
+
+    /**
+     * 请求exercise 
+     */
+    queryExercise() {
+      this.$ajax({
+          url: '/api/exercise',
+          method: 'get',
+      })
+        .then(result => {
+          this.renderData = result.data.result;
+          
+      })
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-  .knowledge {
-    padding-left: 20px;
+  .knowledeg_container {
     width: 1200px;
     margin: 0 auto;
   }
+
 </style>

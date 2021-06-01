@@ -152,3 +152,14 @@ computed: {
 }
 ```
 >>> 注意在 JavaScript 中对象和数组是通过引用传入的，所以对于一个数组或对象类型的 prop 来说，在子组件中改变变更这个对象或数组本身将会影响到父组件的状态。
+### 对题目选项做出选择 && 刷新或者跳转路由切换时，选择项回显 && 题目答案判断
+> 效果展示
+<br>
+选中效果
+![](./src/assets/images/q.png)
+题目判断
+![](./src/assets/images/h.png)
+![](./src/assets/images/d.png)
+
+#### 逻辑说明
+抽离为三个参数：solutions[Array](答案) replys(用户选择) "string collection" value: "string"(x-input组件的value值)。当选中时，将用户选择项和value对比，符合就在computed返回"success"class类；当用户点击交卷时，请求带有答案的接口，然后replys和solutions比较：1.完全相等2. 不相等 2.1 部分匹配 2.2 部分不匹配 2.3 完全不匹配；然后匹配出的数组matchList和value对比即可。

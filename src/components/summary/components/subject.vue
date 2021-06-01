@@ -24,6 +24,9 @@
                 <exercise 
                     :render="localExercise" 
                     :serial="order"
+                    ref="exercise"
+                    :isInput="true"
+                    :isTag="false"
                 >
                 </exercise>
             </main>
@@ -34,7 +37,8 @@
 </template>
 
 <script>
-import Exercise from './components/exercises';
+import Exercise from '@/common/exercise/index'
+
 const propertyMap = [
     {
         property: 1,

@@ -1,13 +1,17 @@
 <template>
     <div class="container">
-        <span :class="[type, innerState, selectedState]" :value="value" ref="choose">
+        <span :class="[type, innerState, selectedState]"  :value="value" ref="choose">
             <span class="pitch" :value="value"></span>
         </span>
         <slot></slot>
+
     </div>
 </template>
  
 <script>
+/**
+ * 单纯的渲染组件，接收reply数组，和value值比较判断
+ */ 
 export default {
     name: 'x-input',
     
@@ -15,6 +19,10 @@ export default {
         type: String,           // radio 单选 checked 多选
         value: String,          // 选项值
         index: Number,
+        solution: {
+            type: Array,
+            default: () => []
+        }
     },
     data() {
         return {
@@ -24,9 +32,89 @@ export default {
     },
     computed: {
         innerState() {
-            if(this.value === this.$attrs.reply && this.type !== "") {
-                return 'success'
-            } 
+            let replys = this.$attrs.reply && this.$attrs.reply.split("");
+            let solution = this.solution && this.solution.map(item => item.toLocaleUpperCase())
+
+            let solutions = this.solution.length ? solution.join("") : ""
+            if (this.type === "radio") {  // 单选
+                if(solutions && solutions.length) {
+
+                    if(solutions.includes(replys) && replys && replys.includes(this.value)) {
+                        return "success"
+                    } else {
+                        if(replys && replys.includes(this.value)) {
+                            return "error"
+                        }
+                    }
+                    
+                } else {
+                    if(replys && replys.includes(this.value)) {
+                        return "success"
+                    } 
+                }
+            } else if (this.type === "checkbox") { // 多选 
+                if(solutions && solutions.length) {
+                    if(solutions.length === replys.length) {
+
+                        let isEque = solutions.split("").sort().join("") === replys.sort().join("");
+
+                        if(isEque) {
+                            if(replys && replys.includes(this.value)) {
+                                return "success"
+                            }
+
+                        } else {
+                            let matchList = [],
+                            noMatch = [];
+
+                            replys && replys.forEach(item => {
+                                if(solutions.includes(item)) {
+                                    
+                                    matchList.push(item)
+                                } else {
+                                    noMatch.push(item)
+                                }
+                            })
+
+
+                            if(noMatch.join("").includes(this.value)) {
+                                return "error"
+                            } 
+
+                            if(matchList.join("").includes(this.value)) {
+                                return "warning"
+                            }
+                        }
+
+                    } else {
+                        let matchList = [],
+                           noMatch = [];
+
+                        replys && replys.forEach(item => {
+                            if(solutions.includes(item)) {
+                                
+                                matchList.push(item)
+                            } else {
+                                noMatch.push(item)
+                            }
+                        })
+
+                        if(noMatch.join("").includes(this.value)) {
+                            return "error"
+                        } 
+
+                        if(matchList.join("").includes(this.value)) {
+                            return "warning"
+                        }
+                    }
+
+                } else {
+                    if(replys && replys.includes(this.value)) {
+                        return "success"
+                    }
+                }
+            }
+           
         }
     },
 
@@ -37,7 +125,7 @@ export default {
 
 <style lang="scss" scoped>
     $success: #586AEA;
-    $warning: #ffcc00;
+    $warning: #ff8a1d;
     $error: #cc3300;
     $common: #cccccc;
 

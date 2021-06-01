@@ -1,6 +1,5 @@
 <template>
   <div class="knowledeg_container">
-    <!-- {{ renderData }} -->
     <ul class="sub-know-container">
       <li v-for="(item, index) in renderData" :key="index">
         <span :class="[propertyMapType[item.property], 'property']">{{propertyMap[item.property]}}</span>
@@ -49,6 +48,8 @@
       </li>
 
     </ul>
+    <!-- {{ renderData }} -->
+
   </div>
 </template>
 

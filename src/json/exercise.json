@@ -1,0 +1,30 @@
+{
+    "choose": [
+        {
+            "a": "done"
+        },
+        {
+            "b": "fail"
+        },
+        {
+            "c": "always"
+        },
+        {
+            "d": "then"
+        }
+    ],
+    "solution": [
+        "a"
+    ],
+    "likes": 0,
+    "views": 86,
+    "comments": [],
+    "isLiked": false,
+    "_id": "606a7c27356a0331ac750f2c",
+    "title": "下列promise所提供的方法中，用来向成功或失败的回调函数队列中添加回调函数的是",
+    "analysis": "then:分别向doneList和failList中添加回调函数；always：添加一个无论成功还是失败都会调用的回调函数",
+    "property": 1,
+    "type": 1,
+    "company": "京东",
+    "reply": "C"
+}

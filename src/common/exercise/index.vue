@@ -2,16 +2,20 @@
     <div class="knowledeg_container">
         <ul class="sub-know-container">
             <li>
+                <span v-if="isTag" :class="[propertyMapType[localRender.property], 'property']">
+                  {{propertyMap[localRender.property]}}
+                </span>
+
                 <span class="serial">{{ serial }}、</span>
 
                 <span class="title">{{ localRender.title }}</span>
-                <ul class="choose-container" >
+             
+                <ul class="choose-container" v-if="localRender.choose && localRender.choose.length">
                   <li v-for="item, i in localRender.choose" 
                       :key="i" 
                       :class="[checkSolution(localRender, item)]"
                       @click="selectChoose($event, i)"
                   >
-
                     <x-input 
                       :type="mapType(localRender)" 
                       :value="Object.keys(item)[0].toUpperCase()" 
@@ -19,6 +23,8 @@
                       :id="'xInput' + i"
                       :index="i"
                       :reply="localRender.reply"
+                      :solution="localRender.solution"
+                      v-if="isInput"
                     >   
                     </x-input>
                     <span class="input-span"></span>    
@@ -31,8 +37,35 @@
                     
                   </li>
 
-
                 </ul>
+                
+                <div v-if="'analysis' in localRender">
+                
+                  <!-- 正确答案  -->
+                  <ul class="short-answer-container">
+                    <li class="">正确答案:</li>
+                    <li>{{ localRender.shortSolution }}</li>
+                  </ul>
+
+                  <!-- 简答解析 -->
+                  <ul class="short-answer-analysis-container" v-if="true">
+                    <li class="analysis-title">解析：</li>
+                    <li class="analysis-content">{{ localRender.analysis }}</li>
+                  </ul>
+
+                  <!-- 浏览量等 -->
+                  <ul class="sum-container">
+                    <li class="views">
+                      <i class="el-icon-view"></i>
+                      <span>{{ localRender.views }}</span>
+                    </li>
+                    <li class="likes pointer" @click="handleLike($event, localRender._id, localRender.isLiked)">
+                      <i :class="{'el-icon-star-off': !localRender.isLiked, 'el-icon-star-on': localRender.isLiked }"></i>
+                      <span>{{ localRender.likes }}</span>
+                    </li>
+                  </ul>
+
+                </div>
             </li>
         </ul>
        
@@ -52,6 +85,14 @@ const inputTypeMap = [
   {
     property: 2,
     type: 'checkbox'
+  },
+  {
+    property: 3,
+    type: 'judge'
+  },
+  {
+    property: 4,
+    type: 'short'
   }
 ]
 
@@ -61,22 +102,38 @@ export default {
       XInput
     },
     props: {
-        render: {
+        reply: String,            // 用户响应reply
+        isInput: Boolean,         // 是否展示input按钮
+        render: {                 // 题目渲染数据
             type: Object,
             default: () => {}
         },
-        serial: {
+        serial: {                 // 题目序号
           type: Number,
           default: 1
         },
-        fresh: String,
-        reply: String
+        isTag: {                  // 是否展示tag
+          type: Boolean,
+          default: true
+        }
     },
     data() {
         return {
-          state: "", // success \ warning \ error \ common
-          innerReply: [],       // 本地暂存用户选择的题目选项
-          localRender: {}
+          state: "",              // success \ warning \ error \ common
+          innerReply: [],         // 本地暂存用户选择的题目选项
+          localRender: {},
+          propertyMapType: {
+            '1': 'single',
+            '2': 'double',
+            '3': 'judge',
+            '4': 'short-answer'
+          },
+          propertyMap: {
+            '1': '单选',
+            '2': "多选",
+            '3': '判断',
+            '4': '简答'
+          },
         }
     },
 
@@ -84,6 +141,7 @@ export default {
       render: {
         handler(newVal) {
           this.localRender = newVal;
+          this.innerReply = newVal && newVal.reply && newVal.reply.split("")
         },
         deep: true,
         immediate: true
@@ -106,7 +164,10 @@ export default {
             };
             break;
           case 2:  // 多选  
-            render.solution && render.solution.join();
+            // render.solution && render.solution.join("");
+            if (render.solution && render.solution.join("").includes(choose)) {
+              state = 'is-active'
+            }
 
         }
         return state;
@@ -122,6 +183,7 @@ export default {
       },
 
       mapType(render) {
+        console.log(render.property, 'render')
         return inputTypeMap.filter(item => {
           return item.property == render.property
         })[0].type
@@ -145,15 +207,18 @@ export default {
 
 
         } else if (target.type === "checkbox") {
+
           if (this.innerReply.includes(value)) {
             let index = this.innerReply.indexOf(value)
             this.innerReply.splice(index, 1)
+
           } else {
             this.innerReply.push(value)
           }
 
           // 传给渲染组件的是数组 
-          this.$set(this.localRender, 'reply', this.innerReply.join(""))
+          this.$set(this.localRender, 'reply', this.innerReply.join(""));
+
         }
        
 

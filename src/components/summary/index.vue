@@ -2,15 +2,15 @@
   <div class="cont">
     <nav-bar></nav-bar>
 
-      <subject 
-        :exercise="exercise" 
-        :total="total" 
-        :order="exerciseIndex"
-        class="sub-container"
-        :fresh="fresh"
-      >
-      </subject>
-    
+    <subject 
+      :exercise="exercise" 
+      :total="total" 
+      :order="exerciseIndex"
+      class="sub-container"
+      :fresh="fresh"
+      ref="subject"
+    >
+    </subject>
 
     <div class="footer" @click="handleClick">
       <x-button 
@@ -28,6 +28,14 @@
           v-if="exerciseIndex !== total"
       >
         下一题
+      </x-button>
+
+      <x-button 
+          class="next" 
+          character="done" 
+          v-if="exerciseIndex === total"
+      >
+        交卷
       </x-button>
     </div>
     
@@ -66,6 +74,9 @@ export default {
     userId() {
       let userId = JSON.parse(tokenInstance.getUserInfo());  // 用户信息id
       return userId
+    },
+    exerIdList() {
+      return this.calculateExerId('content')
     }
   },
   /**
@@ -98,7 +109,7 @@ export default {
     getExercise(id, isAll) {
       return new Promise((resolve,reject) => {
           this.$ajax({
-            url: `/api/exercise/${id}/?answer=0`,
+            url: `/api/exercise/${id}/?answer=${isAll}`,
             method: 'get'
           }).then(data => {
             resolve(data.data.doc)
@@ -132,18 +143,26 @@ export default {
      */
     handleClick(event) {
       let character = event.target.getAttribute('character');
-      let exerIdList = this.calculateExerId('content')
+      // let exerIdList = this.calculateExerId('content')
 
       if(character === 'last') {  // last
         let index = this.calculateExerId('content').indexOf(this.$route.params.id);
-        let currentId = exerIdList[index - 1];
-        
+        let currentId = this.exerIdList[index - 1];
         this.toRoute(currentId);
 
-      } else {   // next
+
+      } else if (character === "next"){   // next
         this.exerciseIndex++;
-        let currentId = exerIdList[this.exerciseIndex - 1];
+        let currentId = this.exerIdList[this.exerciseIndex - 1]
         this.toRoute(currentId);
+
+
+        this.$store.dispatch('reply/setReply', [])
+
+
+      } else {
+        this.isAll = 1;
+        this.toRoute(this.exerIdList[0])
       }
       
     },
@@ -205,6 +224,9 @@ export default {
   .footer {
     display: flex;
     justify-content: center;
+  }
+  .last {
+    margin-right: 20px;
   }
 
  
