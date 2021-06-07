@@ -1,6 +1,6 @@
 const getters = {
   token: state => state.user.token,
-  reply: state => state.reply.reply
+  isCallBack: state => state.exercise.isCallBack
 };
 
 export default getters;

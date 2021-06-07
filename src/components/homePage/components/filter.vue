@@ -108,7 +108,6 @@ export default {
       
       .then(result => {
         let { containers } = result.data.data;
-        // console.log(containers, 'containers')
         this.mediumList = containers
       })
     },

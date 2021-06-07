@@ -33,9 +33,18 @@
       <x-button 
           class="next" 
           character="done" 
-          v-if="exerciseIndex === total"
+          v-if="exerciseIndex === total && isDone"
+
       >
         交卷
+      </x-button>
+
+      <x-button 
+          class="back" 
+          character="back" 
+          v-if="exerciseIndex === total"
+      >
+        返回
       </x-button>
     </div>
     
@@ -63,8 +72,9 @@ export default {
       total: 0,
       exerciseIndex: 1,
       fresh: "",
-      isAll: 0,
-      reply: ""
+      isAll: 0,             // 默认不需要答案信息
+      reply: "",
+      isDone: true,         // 是否展示交卷按钮
     }
   },
   computed: {
@@ -77,7 +87,7 @@ export default {
     },
     exerIdList() {
       return this.calculateExerId('content')
-    }
+    },
   },
   /**
    * 监听访问的路由变化
@@ -87,6 +97,10 @@ export default {
       let idList = this.calculateExerId('content');
       this.exerciseIndex = idList.indexOf(newVal) + 1;
     },
+    reply(newVal) {
+      this.$set(this.exercise, 'reply', newVal)
+    },
+ 
   },
   /**
    * exerciseIndex: this.$route.params.exerciseIdList
@@ -100,12 +114,15 @@ export default {
    * 使用组件路由钩子
    */
   beforeRouteUpdate(to, from, next) {
-    console.log(from, 'from')
     this.renderData(to.params.id, this.isAll, this.userId)
     next(); 
   },
 
   methods: {
+    /**
+     * id: 题目id
+     * isAll 是否获取答案信息 0 不获取 1 获取
+     */
     getExercise(id, isAll) {
       return new Promise((resolve,reject) => {
           this.$ajax({
@@ -120,7 +137,9 @@ export default {
         })
     },
 
-    // 获取回显数据信息
+    /**
+     *  基于用户id获取回显数据信息
+    */ 
     getCallback(userId) {
       return new Promise((resolve,reject) => {
           this.$ajax({
@@ -139,33 +158,41 @@ export default {
     },
     
     /**
-     * 处理last next按钮
+     * 处理last next done back按钮
      */
     handleClick(event) {
       let character = event.target.getAttribute('character');
-      // let exerIdList = this.calculateExerId('content')
 
       if(character === 'last') {  // last
         let index = this.calculateExerId('content').indexOf(this.$route.params.id);
         let currentId = this.exerIdList[index - 1];
         this.toRoute(currentId);
 
-
-      } else if (character === "next"){   // next
+      } else if (character === "next") {   // next
         this.exerciseIndex++;
         let currentId = this.exerIdList[this.exerciseIndex - 1]
         this.toRoute(currentId);
 
+      } else if (character === "done"){
+        this.isAll = 1; 
+        this.toRoute(this.exerIdList[0])
 
-        this.$store.dispatch('reply/setReply', [])
-
+        this.isDone = false
 
       } else {
-        this.isAll = 1;
-        this.toRoute(this.exerIdList[0])
+        this.isAll = 0;
+        this.removeCallback(this.userId)
+
+        this.$router.push({
+          name: 'home'
+        })
       }
       
     },
+
+    /**
+     * 路由跳转封装
+     */
     toRoute(id) {
       this.$router.push({
           name: 'summary',
@@ -181,6 +208,7 @@ export default {
     calculateExerId(identify) {
       let jointId = localStorage.getItem(this.$route.params.companyId);
       let idList = jointId.split(",");
+
       switch(identify) {
         case 'length':
           return idList.length
@@ -190,7 +218,9 @@ export default {
       
     },
     /**
-     * 初始化题目数据
+     * 初始化题目数据,触发条件有：1.0 created 2.0 路由跳转
+     * id: 题目id
+     * isAll 
      */
     async renderData(id, isAll, userId) {
       Promise.all([this.getExercise(id, isAll), this.getCallback(userId)])
@@ -211,6 +241,26 @@ export default {
       this.total = this.calculateExerId('length');
     },
 
+    /**
+     * 移除题目回显
+     */
+    removeCallback(userId) {
+        return new Promise((resolve,reject) => {
+          this.$ajax({
+            url: `/api/user/userReplyRemove`,
+            method: 'post',
+            data: {
+              userId: userId
+            }
+          }).then(data => {
+            resolve(data.data.data)
+          })
+          .catch(err => {
+            reject(err)
+          })
+        })
+    }
+
     
   }
 }
@@ -226,6 +276,9 @@ export default {
     justify-content: center;
   }
   .last {
+    margin-right: 20px;
+  }
+  .next {
     margin-right: 20px;
   }
 

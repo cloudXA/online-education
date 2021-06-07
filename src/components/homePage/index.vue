@@ -36,9 +36,7 @@ export default {
       id: ""
     };
   },
-  created() {
-    console.log(tokenInstance.getUserInfo(), 'userid')
-  },
+ 
   methods: {
     queryExerciseBasic(id) {
       this.id = id;

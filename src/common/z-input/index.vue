@@ -37,6 +37,7 @@ export default {
 
             let solutions = this.solution.length ? solution.join("") : ""
             if (this.type === "radio") {  // 单选
+            
                 if(solutions && solutions.length) {
 
                     if(solutions.includes(replys) && replys && replys.includes(this.value)) {

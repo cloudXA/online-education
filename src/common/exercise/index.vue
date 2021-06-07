@@ -66,6 +66,7 @@
                   </ul>
 
                 </div>
+
             </li>
         </ul>
        
@@ -75,24 +76,34 @@
 <script>
 import XInput from '@/common/z-input/index';
 import tokenInstance from '@/utils/auth';
-
+import * as deepcopy from 'deepcopy'
 
 const inputTypeMap = [
   {
     property: 1,
-    type: 'radio'
+    type: 'radio',
+    index: 0,
+    value: "A",
+    check: false
   },
   {
     property: 2,
-    type: 'checkbox'
+    type: 'checkbox',
+    index: 1,
+    value: "B",
+    check: true
   },
   {
     property: 3,
-    type: 'judge'
+    type: 'judge',
+    index: 2,
+    value: "C"
   },
   {
     property: 4,
-    type: 'short'
+    type: 'short',
+    index: 3,
+    value: "D"
   }
 ]
 
@@ -121,7 +132,8 @@ export default {
         return {
           state: "",              // success \ warning \ error \ common
           innerReply: [],         // 本地暂存用户选择的题目选项
-          localRender: {},
+          localRender: {},        // 本地渲染的render
+          type: "",               // radios 或者 check
           propertyMapType: {
             '1': 'single',
             '2': 'double',
@@ -138,17 +150,21 @@ export default {
     },
 
     watch: {
+      /**
+       * 监听经过回显修改添加reply的render函数。所有的innerReply均为数组 
+       * 父组件来的render赋值给了localRender后，改变子级localRender后，
+       * 父级localRender也会跟着改变
+       */
       render: {
-        handler(newVal) {
-          this.localRender = newVal;
-          this.innerReply = newVal && newVal.reply && newVal.reply.split("")
+        handler(newVal, oldVal) {
+          // 注释的=赋值操作，实际上将对象的地址赋值，每当我改变this.localRender的时候，我也会改变render，造成render被重复监听。
+          // this.localRender = newVal;  
+          this.localRender = deepcopy(newVal)
+          this.innerReply.splice(0)
         },
         deep: true,
         immediate: true
       }
-    },
-
-    created() {
     },
 
 
@@ -164,7 +180,6 @@ export default {
             };
             break;
           case 2:  // 多选  
-            // render.solution && render.solution.join("");
             if (render.solution && render.solution.join("").includes(choose)) {
               state = 'is-active'
             }
@@ -183,37 +198,35 @@ export default {
       },
 
       mapType(render) {
-        console.log(render.property, 'render')
         return inputTypeMap.filter(item => {
           return item.property == render.property
         })[0].type
       },
 
       async selectChoose(event, index) {
-        let target = this.$refs['xInput' + index][0];
         let id = this.localRender._id;   // 题目id
         let userId = JSON.parse(tokenInstance.getUserInfo());  // 用户信息id
-        let value = target.value; // 题目信息
+        let value = inputTypeMap.filter(item => item.index === index )[0].value
+        let type = inputTypeMap.filter(item => item.property === this.localRender.property)[0].type
 
         this.$set(this.localRender, 'reply', "")
 
-        if(target.type === 'radio') {
+        if(type === 'radio') {
+
           this.localRender[0] = value;
           this.innerReply[0] = value
-
+          
           // 传给渲染组件的是字符串
           this.$set(this.localRender, 'reply', value)
-          this.$store.dispatch("reply/setReply", this.innerReply) 
 
-
-        } else if (target.type === "checkbox") {
-
+        } else if (type === "checkbox") {
           if (this.innerReply.includes(value)) {
             let index = this.innerReply.indexOf(value)
             this.innerReply.splice(index, 1)
 
           } else {
             this.innerReply.push(value)
+
           }
 
           // 传给渲染组件的是数组 
@@ -240,7 +253,7 @@ export default {
         this.localRender.choose.forEach((item,index) => {
             this.$el.querySelector('#xInput' + index).children[0].classList.remove('success')
           })
-      }
+      },
       
     },
 

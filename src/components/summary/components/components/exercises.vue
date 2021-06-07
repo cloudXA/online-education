@@ -141,7 +141,7 @@ export default {
 
           // 传给渲染组件的是字符串
           this.$set(this.localRender, 'reply', value)
-          this.$store.dispatch("reply/setReply", this.innerReply) 
+          // this.$store.dispatch("reply/setReply", this.innerReply) 
 
 
         } else if (target.type === "checkbox") {

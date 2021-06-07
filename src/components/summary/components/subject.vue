@@ -49,7 +49,7 @@ const propertyMap = [
     {
         property: 2,
         name: '多选',
-        class: 'multiple',
+        class: 'double',
         isCollect: false
     },
     {
@@ -61,7 +61,7 @@ const propertyMap = [
     {
         property: 4,
         name: '简答',
-        class: 'short',
+        class: 'short-answer',
         isCollect: false
     }
 ]
@@ -72,14 +72,13 @@ export default {
         Exercise,
     },
     props: {
+        total: Number,
+        order: Number,
+        fresh: String,  // 用于刷新选项
         exercise: {
             type: Object,
             default: () => {}
         },
-        total: Number,
-        order: Number,
-        fresh: String,  // 用于刷新选项
-        
     },
     data() {
         return {
@@ -100,7 +99,6 @@ export default {
     },
     methods: {
         calculateMap(exercise, distribute) {
-            // vue组件渲染顺序：1 props默认值 ---> 2 传递过来的prop值 
             if(Object.keys(exercise).length) { 
                 return propertyMap.filter(item => item.property === exercise.property)[0][distribute]
             }
@@ -121,6 +119,30 @@ export default {
             width: 240px;
             height: 30px;
             background: url("../../../image/single.png");
+            text-align: center;
+            line-height: 30px;
+
+        } 
+        .double {
+            width: 240px;
+            height: 30px;
+            background: url("../../../image/double.png");
+            text-align: center;
+            line-height: 30px;
+
+        }
+        .judge {
+            width: 240px;
+            height: 30px;
+            background: url("../../../image/judge.png");
+            text-align: center;
+            line-height: 30px;
+
+        }
+        .short-answer {
+            width: 240px;
+            height: 30px;
+            background: url("../../../image/short.png");
             text-align: center;
             line-height: 30px;
 
