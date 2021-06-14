@@ -1,9 +1,13 @@
 <template>
   <div class="container">
     <div class="title">面试题区</div>
-    
+
     <div class="item-container">
-      <div class="paper-container" v-for="(item, index) in companyExercise" :key="index"> 
+      <div class="paper-container" :key="index"
+        v-for="(item, index) in companyExercise" 
+        @mouseover="debounceOver($event)"
+        @mouseleave="debounceLeave($event)"
+        > 
         <div class="interview-top">
           <div class="paper"></div>
           <div class="title-container">
@@ -20,22 +24,27 @@
                 <span class="eye-icon"></span>
                 <p>{{ item.views }}人</p>
               </span>
-              
             </div>
           </div>
         </div>
-        <div class="x-button">
+        <div class="x-button-hidden" >
           <x-button @click.native="handleSkip(item.idList, item.company)">立即前往</x-button>
         </div>
       </div> 
+
+      <!-- <not-found v-if="!companyExercise.length"></not-found> -->
+      <div v-if="!companyExercise.length">
+        <no-data></no-data>
+        
+      </div>
     </div>
     
-      
   </div>  
 </template>
 
 <script>
 import XButton from '../../../common/button/index';
+import debounce from '@/utils/debounce';
 /**
  * props: 
  *  id: 接收basic 基础id(最底层的分类id)
@@ -54,6 +63,7 @@ export default {
   data() {
     return {
       interview: "",
+      test: "",
       list: [1,2,3,4,5],
       companyExercise: ""  
     }
@@ -63,12 +73,31 @@ export default {
     id: {
       type: String,
       default: ""
+    },
+
+  },
+
+  computed: {
+    isAll() {
+      return this.$store.getters.isAll
     }
   },
+
+
   watch: {
     id(val) {
       this.queryExerciseBasic(val)
+    },
+
+    isAll(val) {
+      if(val) {
+        this.queryExerciseBasic("all")
+      }
     }
+  },
+
+  created() {
+    this.queryExerciseBasic("all")
   },
   methods: {
     queryExerciseBasic(id) {
@@ -80,30 +109,111 @@ export default {
         }
       })
       .then(result => {
-        let { exercises } = result.data.data;
-        this.interview = exercises
-        this.classifyInterview(this.interview)
+        if (id === "all") {
+          let arrayList = result.data.data;
+          let temp = [];
+          for(let array of arrayList) {
+            if(array.exercises.length !== 0) {
+              temp.push(...array.exercises)
+            }
+          }
+          this.interview = temp;
+          this.classifyInterview(this.interview)
+
+        } else {
+          let { exercises } = result.data.data;
+
+          this.interview = exercises
+          this.classifyInterview(this.interview)
+        }
+
+
       })
     },
 
     classifyInterview(interview) {
-      let companyList = interview.map(item => item.company);
+      let companyList;
+      if(interview.length !== 0) {
+        companyList = interview.length && interview.map(item => item.company);
+      }
       let companySet = new Set(companyList);
       let companyExercise = [];
       let singleCompany = [...companySet]
       singleCompany.forEach(item => {
-        let idList = interview.filter(interview => interview.company === item)
+        let idList = interview.length && interview.filter(interview => interview.company === item)
                               .map(ele => {
-                                return {id: ele._id, views: ele.views}
+                                return { 
+                                  id: ele._id, 
+                                  views: ele.views,
+                                  property: ele.property
+                                }
                               })
-        companyExercise.push({idList, company: item, total: idList.length, views: Math.max(...idList.map(item => item.views)) })
+
+        companyExercise.push({
+          idList, 
+          company: item, 
+          total: idList.length, 
+          views: Math.max(...idList.map(item => item.views)) 
+        })
+
       })
+
       this.companyExercise = companyExercise;
+
+      this.$emit('transferExercise', this.classifyProperty(companyExercise));
+    },
+
+    /**
+     * companyExercise 渲染公司题库的数据
+     */
+    classifyProperty(companyExercise) {
+      let calData = [];
+
+      companyExercise.forEach(item => {
+          let propertyList = [...new Set(item.idList.map(item => item.property))]
+          let temp = [];
+          propertyList.forEach(property => {
+              temp.push(item.idList.filter(list => list.property === property))
+          })
+          
+          temp.forEach(tem => {
+              calData.push({
+                  idList: tem,
+                  company: item.company,
+                  views: item.views,
+                  total: tem.length,
+                  property: tem[0].property
+              })
+          })
+
+      })
+
+      return calData;
     },
 
     handleSkip(list) {
       this.$emit("clickButton", list); 
       
+    },
+
+    handleOver(event) {
+      if(event.currentTarget) {
+        event.currentTarget.children[1].className = "x-button-show"
+      } 
+    },
+
+    handleLeave(event) {
+      if(event.currentTarget) {
+        event.currentTarget.children[1].className = "x-button-hidden"
+      }
+    },
+
+    debounceOver(event) {
+       debounce(this.handleOver, 500, true, event).call(null, event);
+    },
+
+    debounceLeave(event) {
+      debounce(this.handleLeave, 500, true, event).call(null, event);
     }
   }
 }
@@ -117,20 +227,20 @@ export default {
     
     .title {
       width: 400px;
-      height: 28px;
-      background: url("/src/image/title.png") 0 0 no-repeat;
+      height: 63px;
+      background: url("/src/image/title.png") 0  no-repeat;
       text-align: center;
       font-size: 24px;
       font-weight: 500;
       color: #586AEA;
-      line-height: 22px;
+      line-height: 63px;
       margin: 0 auto;
       margin-bottom: 24px;
     }
     .item-container {
       display: flex;
       flex-wrap: wrap;
-      // justify-content: space-between;
+      justify-content: space-between;
       .paper-container {
         display: flex;
         flex-direction: column;
@@ -183,8 +293,11 @@ export default {
             }
           }
         }
-        .x-button {
-          margin-top: 20px;
+        .x-button-show {
+          margin-top: 35px;
+        }
+        .x-button-hidden {
+          display: none;
         }
         
       }
@@ -195,4 +308,5 @@ export default {
     }
     
   }
+
 </style>

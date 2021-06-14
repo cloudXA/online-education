@@ -1,5 +1,6 @@
 <template>
-  <div class="knowledeg_container">
+  <div>
+    <div class="knowledeg_container">
       <ul class="sub-know-container">
         <li v-for="(item, index) in renderData" :key="index">
           <exercise
@@ -12,7 +13,9 @@
           </exercise>
         </li>
       </ul>
+    </div>
 
+    <footer-area v-if="renderData"></footer-area>
 
   </div>
 </template>

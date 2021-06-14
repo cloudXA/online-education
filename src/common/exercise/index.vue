@@ -14,7 +14,7 @@
                   <li v-for="item, i in localRender.choose" 
                       :key="i" 
                       :class="[checkSolution(localRender, item)]"
-                      @click="selectChoose($event, i)"
+                      @click="handleReply($event, i)"
                   >
                     <x-input 
                       :type="mapType(localRender)" 
@@ -37,7 +37,19 @@
                     
                   </li>
 
-                </ul>
+                </ul> 
+
+                <div class="choose-container" v-else>
+                  <el-input
+                    type="textarea"
+                    :autosize="size"
+                    :rows="2"
+                    placeholder="请输入内容"
+                    v-model="shortAnswer"
+                    @blur="handleBlur"
+                    >
+                  </el-input>
+                </div>
                 
                 <div v-if="'analysis' in localRender">
                 
@@ -134,6 +146,10 @@ export default {
           innerReply: [],         // 本地暂存用户选择的题目选项
           localRender: {},        // 本地渲染的render
           type: "",               // radios 或者 check
+          shortAnswer: "",
+          size: {
+            minRows: 8, 
+          },
           propertyMapType: {
             '1': 'single',
             '2': 'double',
@@ -158,9 +174,16 @@ export default {
       render: {
         handler(newVal, oldVal) {
           // 注释的=赋值操作，实际上将对象的地址赋值，每当我改变this.localRender的时候，我也会改变render，造成render被重复监听。
-          // this.localRender = newVal;  
           this.localRender = deepcopy(newVal)
-          this.innerReply.splice(0)
+
+          this.innerReply.splice(0);
+
+          if(this.localRender.reply) {
+            this.shortAnswer = this.localRender.reply
+          } else {
+            this.shortAnswer = ""
+          }
+          
         },
         deep: true,
         immediate: true
@@ -203,7 +226,17 @@ export default {
         })[0].type
       },
 
-      async selectChoose(event, index) {
+
+      handleBlur() {
+
+        this.innerReply.push(this.shortAnswer)
+
+        this.$set(this.localRender, 'reply', this.shortAnswer)
+
+        this.addUserReply(this.localRender._id, JSON.parse(tokenInstance.getUserInfo()), this.shortAnswer)
+      },
+
+      async handleReply(event, index) {
         let id = this.localRender._id;   // 题目id
         let userId = JSON.parse(tokenInstance.getUserInfo());  // 用户信息id
         let value = inputTypeMap.filter(item => item.index === index )[0].value
@@ -234,16 +267,22 @@ export default {
 
         }
        
+        this.addUserReply(id, userId, this.innerReply.join(""))
+      },
 
-        await this.$ajax({
-                url: `/api/user/userAddReply`,
-                method: 'post',
-                data: {
-                  exerId: id,
-                  userId: userId,
-                  reply: this.innerReply.join("")
-                }
-              })
+      /**
+       * reply: 用户回复的内容 
+       */
+      addUserReply(id, userId, reply) {
+        this.$ajax({
+            url: `/api/user/userAddReply`,
+            method: 'post',
+            data: {
+              exerId: id,
+              userId: userId,
+              reply: reply
+            }
+          })
       },
 
       /**
@@ -318,6 +357,14 @@ export default {
           .is-active {
             color: #586AEA;
             font-size: 16px;
+          }
+
+          /deep/ .el-textarea__inner {
+              font-size: 14px;
+              font-family: PingFangSC-Regular, PingFang SC;
+              font-weight: 400;
+              color: #333333;
+              line-height: 20px;
           }
         }
         .analysis-container {

@@ -4,6 +4,7 @@ import router from './router/index.js';
 import store from './store/index.js';
 import "./assets/iconfont/iconfont.css";
 
+import plugins from './plugins';
 import request from './utils/request.js';
 Vue.prototype.$ajax = request;
 
@@ -20,6 +21,8 @@ import '../mock';
 Vue.config.productionTip = false;
 
 Vue.use(Element);
+Vue.use(plugins)
+
 
 
 new Vue({

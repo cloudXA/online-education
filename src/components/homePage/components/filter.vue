@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <ul class="topContainer" @click="handleClick($event)">
-      <li :class="{ active: isActive }" id="null">全部</li>
+      <li :class="{ active: isActive }" name="all" id="null" ref="all">全部</li>
       <li v-for="(item, index) in topList" :key="index" :id="item.id || item._id">
         {{item.name}}
       </li>
@@ -72,10 +72,16 @@ export default {
   },
   created() {
     this.queryCategoryTop();
+
+    this.$nextTick(() => {
+      this.$store.dispatch('filter/set_isAll', true)
+    })
+    
+
   },
   methods: {
     /**
-     * 请求顶层分类
+     * 请求一级分类top
      */
     queryCategoryTop() {
       this.$ajax({
@@ -95,7 +101,7 @@ export default {
     },
 
   /**
-   * 请求中间层分类
+   * 请求二级分类medium
    */
     queryCategoryMedium(id) {
       this.$ajax({
@@ -113,7 +119,7 @@ export default {
     },
 
   /**
-   * 请求底层分类
+   * 请求三级分类(basic)
    */
     queryCategoryBasic(id) {
       this.$ajax({
@@ -123,45 +129,43 @@ export default {
           id: id
         }
       })
-      
       .then(result => {
         let { containers } = result.data.data;
         this.basicList = containers
       })
     },
 
-    queryExerciseBasic(id) {
-      this.$ajax({
-        url: '/api/filterate/basicExercise',
-        method: 'get',
-        params: {
-          id: id
-        }
-      })
-      .then(result => {
-        console.log(result, 'reuslt queryexeericse')
-      })
-    },
-
+    /**
+     * 一级分类中获取二级分类内容
+     */
     handleClick(event) {
-      /**
-       * Tips: get element's tagName的方法
-       */
-      if(event.target.tagName == "LI") {
+      if(event.target.tagName == "LI" && event.target.getAttribute("name") === "all") {
+        this.toggleActive(event, 'top');
+
+        this.clearActive("mediumUl");
+        this.clearActive("basicUl");
+        this.basicList = "";
+        this.mediumList = "";
+
+        this.$store.dispatch('filter/set_isAll', true)
+
+      } else if (event.target.tagName == "LI") {
+        
+        this.$store.dispatch('filter/set_isAll', "")
         this.toggleActive(event, 'top');
         this.queryCategoryMedium(event.target.getAttribute('id'));
+
       }
-      
 
-
-      /**
-       * Tips: 清空数组的渲染的方法
-       */
-      this.basicList.length = 0;
-      
+      if(this.basicList) {
+        this.basicList.length = 0
+      }
 
     },
 
+    /**
+     * 二级分类中获取三级分类
+     */
     handleMediumClick(event) {
       if(event.target.tagName == "LI") {
         this.toggleActive(event, 'medium');
@@ -169,25 +173,24 @@ export default {
       }
     },
 
+    /**
+     * 三级分类中获取对应的exercise题目内容
+     */
     handleBasicClick(event) {
       if(event.target.tagName == "LI") {
         this.toggleActive(event);
         let id = event.target.getAttribute('id');
         this.$emit('basicFilter', id)
-        // this.queryExerciseBasic(event.target.getAttribute('id'))
       }
     },
 
     handleChooseClick(event) {
       if(event.target.tagName == "LI") {
         this.toggleActive(event);
-        // this.queryExerciseBasic(event.target.getAttribute('id'))
       }
     },
 
-    /**
-     * Tips:event.target.classList作为一个对象具有的api有：add('class') remove('class') toggle('class') replace()
-     */
+
     toggleActive(event, level) {
       let ulTag = event.currentTarget;
       for(let i = 0, length = ulTag.children.length; i < length; i ++) {
@@ -196,9 +199,6 @@ export default {
 
       event.target.classList.add("active")
 
-      /**
-       * Tips: switch case 情况
-       */
       switch(level) {
         case 'top':
           this.clearActive('mediumUl');
@@ -211,10 +211,8 @@ export default {
       }
 
     },
+
     clearActive(ulList) {
-      /**
-       * Tips: 在原生HTML标签使用this.$refs['list']指向元素
-      */
       let mediumUl = this.$refs[ulList]
       for(let i = 0, length = mediumUl.children.length; i < length; i ++) {
         mediumUl.children[i].classList.remove('active')

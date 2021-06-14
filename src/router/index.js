@@ -48,6 +48,10 @@ export default new Router({
     {
       path: '/register',
       component: () => import ('@/components/register')
+    },
+    {
+      path: "*",
+      component: () => import("@/components/friendTips/404.vue")
     }
   ]
 });

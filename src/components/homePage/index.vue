@@ -1,17 +1,37 @@
 <template>
   <div class="container">
     <!-- 图片横幅 -->
-    <div class="banner">
+    <div class="banner"></div>
 
-    </div>
     <!-- 级联选择器 -->
-    <filter-navbar @basicFilter="queryExerciseBasic">
+    <filter-navbar 
+        class="navbar"
+        @basicFilter="queryExerciseBasic"
+        @queryAllExercise="queryAllExercise"
+    >
 
     </filter-navbar>
-    <!-- 面试题区 -->
-    <inter-view :id="id" @clickButton="skipSummary">
 
+    <!-- 面试题区 -->
+    <inter-view 
+        class="interview"
+        :id="id" 
+        @clickButton="skipSummary"
+        @transferExercise="receiptData"
+        :isAll="isAll"
+    >
     </inter-view>
+
+    <!-- 普通题区 -->
+    <ordinary-area
+        class="ordinary"
+        :ordinaryData="ordinaryData"
+        @clickButton="skipSummary"
+        >
+
+    </ordinary-area>
+
+    <footer-area></footer-area>
 
   </div>
 </template>
@@ -20,7 +40,7 @@
 import SubNavbar from "@/components/subNavbar/index";
 import FilterNavbar from "./components/filter";
 import InterView from "./components/interview";
-import tokenInstance from '@/utils/auth';
+import OrdinaryArea from './components/ordinary.vue'
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -29,17 +49,24 @@ export default {
   components: {
     SubNavbar,
     FilterNavbar,
-    InterView
+    InterView,
+    OrdinaryArea,
   },
   data() {
     return {
-      id: ""
+      id: "",
+      ordinaryData: [],
+      isAll: false
     };
   },
  
   methods: {
     queryExerciseBasic(id) {
       this.id = id;
+    },
+
+    queryAllExercise() {
+      this.isAll = true
     },
 
     skipSummary(list, company) {
@@ -57,7 +84,15 @@ export default {
       })
       
       window.localStorage.setItem(companyId, jointId)
-    }
+    },
+
+    receiptData(data) {
+      // alert(data)
+      console.log(data, 'data')
+      this.ordinaryData = data
+    } 
+
+    
   }
 };
 </script>
@@ -73,6 +108,9 @@ export default {
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100% 100%;
+  }
+  .ordinary, .interview {
+    margin-top: 20px;
   }
 }
 </style>

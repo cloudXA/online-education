@@ -98,7 +98,8 @@ export default {
       this.exerciseIndex = idList.indexOf(newVal) + 1;
     },
     reply(newVal) {
-      this.$set(this.exercise, 'reply', newVal)
+      this.$set(this.exercise, 'reply', newVal);
+      // this.inner
     },
  
   },
