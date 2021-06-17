@@ -1,17 +1,21 @@
 var path = require('path');
 var webpack = require('webpack');
-// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './src/main.js',
+  mode:'development', // 开发模式
+  entry: path.resolve(__dirname, './src/main.js'),
   output: {
     path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
-    filename: 'build.js'
+    publicPath: '',
+    filename: '[name].[hash:8].js'
   },
   plugins: [
-    new VueLoaderPlugin()
+    new VueLoaderPlugin(),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, './public/index.html')
+    })
   ],
   module: {
     rules: [
@@ -43,9 +47,6 @@ module.exports = {
         loader: 'vue-loader',
         options: {
           loaders: {
-            // Since sass-loader (weirdly) has SCSS as its default parse mode, we map
-            // the "scss" and "sass" values for the lang attribute to the right configs here.
-            // other preprocessors should work out of the box, no loader config like this necessary.
             'scss': [
               'vue-style-loader',
               'css-loader',
@@ -57,7 +58,6 @@ module.exports = {
               'sass-loader?indentedSyntax'
             ]
           }
-          // other vue-loader options go here
         }
       },
       {
@@ -85,8 +85,6 @@ module.exports = {
   },
   resolve: {
     alias: {
-      // 'vue$': 'vue/dist/vue.esm.js',
-      // '@': resolve('src')
       '@': path.resolve(__dirname, 'src')
     },
     extensions: ['*', '.js', '.vue', '.json']
@@ -103,18 +101,12 @@ module.exports = {
 };
 if (process.env.NODE_ENV === 'production') {
   module.exports.devtool = '#source-map';
-  // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"'
       }
     }),
-    // new UglifyJsPlugin({
-    //   uglifyOptions: {        
-    //     ecma: 8      
-    //   }
-    // }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
     })
