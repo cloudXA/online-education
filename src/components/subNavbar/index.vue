@@ -1,6 +1,5 @@
 <template>
   <div class="tabNav">
-    <!-- TODO: 事件委托，异步ajax请求  -->
       <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="全部" name="first">
         <div>

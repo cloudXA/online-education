@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="home">
     <nav-bar></nav-bar>
     <component :is='currentPage'></component> 
   </div>
@@ -46,6 +46,9 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+  .home {
+    width: 1200px;
+    margin: 0 auto;
+  }
 </style>

@@ -43,7 +43,7 @@ export default {
   },
   mounted() {
     // 获取浏览器宽高 
-    // this.height = document.documentElement.clientHeight
+    this.height = document.documentElement.clientHeight
     this.$refs.app.style.height = document.documentElement.clientHeight + 'px'
 
    
@@ -55,11 +55,13 @@ export default {
   .cont {
     height:auto; 
     overflow:hidden;
-    background-image: url("../../image/bg.png");
+    background-color: #586AEA;
     background-position: 0 0;
     background-size: 100% 100%;
     background-repeat: no-repeat;
-    display: block;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 
     .title {
       width: 96px;
@@ -69,7 +71,8 @@ export default {
       font-weight: 500;
       color: #FFFFFF;
       line-height: 45px;
-      margin: 32px 0 0 320px;
+      margin: 30px 0;
+
     }
   }
   .container {
@@ -77,11 +80,7 @@ export default {
     border: 1px solid blueviolet;
     width: 520px;
     height: 400px;  //加上之后使得width超出1920px  
-    position: absolute;
-    left: 720px;
-    top: 32px;
     padding: 40px 82px 37px 78px;
-    width: 520px;
     background: #FFFFFF;
     border-radius: 8px;
     border: 1px solid #979797;

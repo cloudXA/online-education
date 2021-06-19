@@ -10,6 +10,8 @@ export default {
 };
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+  #app {
+    background-color: #f8f8f8;
+  }
 </style>

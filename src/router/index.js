@@ -46,10 +46,6 @@ export default new Router({
       name: 'sign'
     },
     {
-      path: '/register',
-      component: () => import ('@/components/register')
-    },
-    {
       path: "*",
       component: () => import("@/components/friendTips/404.vue")
     }

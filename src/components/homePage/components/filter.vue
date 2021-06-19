@@ -227,6 +227,7 @@ export default {
     width: 1200px;
     margin: 0 auto;
     background: white;
+    padding: 0 20px;
   }
   .topContainer {
     display: flex;

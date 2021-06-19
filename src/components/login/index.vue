@@ -10,9 +10,6 @@
         <el-form-item label="密码："> 
           <el-input v-model="form.password" placeholder="请输入密码"></el-input>
         </el-form-item>
-        <el-form-item label="验证码：">
-          <el-input v-model="form.vertification" placeholder="请输入验证码"></el-input>
-        </el-form-item>
         <p class="forgetPassword">忘记密码</p>
         <el-form-item size="large">
           <el-button type="primary" @click="onSubmit">登录</el-button>
@@ -73,11 +70,13 @@ export default {
   .cont {
     height:auto; 
     overflow:hidden;
-    background-image: url("../../image/bg.png");
+    background-color: #586AEA;
     background-position: 0 0;
     background-size: 100% 100%;
     background-repeat: no-repeat;
-    display: block;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 
     .title {
       width: 96px;
@@ -87,17 +86,12 @@ export default {
       font-weight: 500;
       color: #FFFFFF;
       line-height: 45px;
-      margin: 32px 0 0 320px;
+      margin: 30px 0;
     }
   }
   .container {
     z-index: 10;
     border: 1px solid blueviolet;
-    width: 520px;
-    height: 600px;  //加上之后使得width超出1920px  
-    position: absolute;
-    left: 720px;
-    top: 32px;
     padding: 40px 82px 37px 78px;
     background: #FFFFFF;
     border-radius: 8px;
@@ -190,7 +184,7 @@ export default {
   }
 </style>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .container > .el-form {
     .el-form-item__label {
       line-height: 20px;

@@ -69,7 +69,7 @@ export default {
                 height: 120px;
                 background-image: url("../../image/code.jpg");
                 background-size: 120px 120px;
-                background-position: 0;
+                background-position: 2px 0;
             }
             .tips {
                 font-size: 14px;

@@ -221,8 +221,8 @@ export default {
 
 <style lang="scss" scoped>
   .container {
-    margin: 0 auto;
-    width: 1200px;
+    // margin: 0 auto;
+    // width: 1200px;
     background: #FFFFFF;
     
     .title {

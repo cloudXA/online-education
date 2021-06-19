@@ -1,7 +1,12 @@
 <template>
   <div class="container">
     <!-- 图片横幅 -->
-    <div class="banner"></div>
+    <div class="banner">
+      <div>
+        自信人生二百年，
+      </div>
+      <div>会当水击三千里。</div>
+    </div>
 
     <!-- 级联选择器 -->
     <filter-navbar 
@@ -100,14 +105,28 @@ export default {
 <style lang="scss">
 .container {
   background: #f8f8f8;
+  width: 1200px;
   .banner {
     cursor: pointer;
     width: 100%;
     height: 560px;
-    background-image: url("../../image/banner.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100% 100%;
+    background-color: #cce8cf;
+    display: flex;
+    flex-direction: column;
+    color: #676767;
+    font-size: 27px;
+    align-content: flex-end;
+    align-items: center;
+    div {
+      margin-top: 120px;
+    }
+    div:nth-child(1) {
+      text-indent: -80px;
+    }
+
+    div:nth-child(2) {
+      text-indent: 80px;
+    }
   }
   .ordinary, .interview {
     margin-top: 20px;
