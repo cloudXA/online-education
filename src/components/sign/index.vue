@@ -3,12 +3,42 @@
     <p class="title">爱题网</p>
     <div class="container clearfix">
       <p class="formTitle">注册</p>
-      <el-form ref="form" :model="form" label-width="80px" label-position="top">
-        <el-form-item label="邮箱：">
-          <el-input v-model="form.email" placeholder="请输入邮箱"></el-input>
+      <el-form 
+        ref="form" 
+        :model="form" 
+        label-width="80px" 
+        label-position="top"
+        :rules="rules"
+        status-icon
+      >
+        <el-form-item 
+          label="邮箱：" 
+          prop="email"
+        >
+          <el-input 
+            v-model="form.email" 
+            placeholder="请输入邮箱"
+            autocomplete="off"
+          >
+          </el-input>
         </el-form-item>
-        <el-form-item label="密码："> 
-          <el-input v-model="form.password" placeholder="请输入密码"></el-input>
+        <el-form-item 
+          label="密码："
+          prop="password"
+        > 
+          <el-input 
+            v-model="form.password" 
+            placeholder="请输入密码"
+            :type="passwordType"
+            autocomplete="off"
+          >
+          </el-input>
+
+          <span class="show-pwd" @click="showPwd">
+            <i class="iconfont icon-eye" :class="passwordType === 'password' ? 'icon-eye1' : 'icon-eye'" ></i>
+          </span>
+
+
         </el-form-item>
         <el-form-item size="large" class="signButton">
           <x-button @click.native="onSubmit" type="input">注册</x-button>
@@ -27,12 +57,48 @@ export default {
     XButton
   },
   data() {
+    let validatePass = (rule, value, callback) => {
+      if (value === '') {
+        console.log('null')
+        callback(new Error('请输入密码'));
+      } else {
+        callback();
+      }
+    };
+
+    let validateEmail = (rule, value, callback) => {
+      console.log('hi')
+      let regular = /\S+@\S+\.\S+/;
+      if(value === "") {
+        callback(new Error('邮箱不能为空'))
+      } else if(value !== "" && !regular.test(value)) {
+        callback(new Error('邮箱格式不正确'))
+      }else {
+        callback();
+      }
+      
+    }
+
+
     return {
       form: {
         email: '',
         password: '',
       },
-      height: ''
+      height: '',
+      passwordType: "",
+      rules: {
+        email: [
+          {
+            validator: validateEmail, trigger: ['blur','change']
+          }
+        ],
+        password: [
+          {
+            validator: validatePass, trigger: ['blur','change']
+          }
+        ],
+      }
     }
   },
   methods: {
@@ -44,6 +110,17 @@ export default {
               this.$router.push({name: 'login'})
             })
         }
+      })
+    },
+
+    showPwd() {
+      if (this.passwordType === 'password') {
+        this.passwordType = ''
+      } else {
+        this.passwordType = 'password'
+      }
+      this.$nextTick(() => {
+        this.$refs.password.focus()
       })
     }
   },

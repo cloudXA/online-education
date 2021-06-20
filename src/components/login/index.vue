@@ -3,19 +3,52 @@
     <p class="title">爱题网</p>
     <div class="container clearfix">
       <p class="formTitle">登录</p>
-      <el-form ref="form" :model="form" label-width="80px" label-position="top">
-        <el-form-item label="账号：">
-          <el-input v-model="form.email" placeholder="请输入账号"></el-input>
+
+      <el-form 
+        ref="form" 
+        :model="form" 
+        label-width="80px" 
+        label-position="top" 
+        :rules="rules"
+        status-icon
+      >
+        <el-form-item 
+          label="账号：" 
+          prop="email"
+          
+        >
+          <el-input 
+            v-model="form.email" 
+            placeholder="请输入账号"
+            autocomplete="off"
+          >
+          </el-input>
+
         </el-form-item>
-        <el-form-item label="密码："> 
-          <el-input v-model="form.password" placeholder="请输入密码"></el-input>
+
+        <el-form-item 
+          label="密码："
+          prop="password"
+        > 
+          <el-input 
+            :type="passwordType"
+            v-model="form.password" 
+            placeholder="请输入密码"
+            autocomplete="off"
+          >
+          </el-input>
+
+          <span class="show-pwd" @click="showPwd">
+            <i class="iconfont icon-eye" :class="passwordType === 'password' ? 'icon-eye1' : 'icon-eye'" ></i>
+          </span>
         </el-form-item>
+
+
         <p class="forgetPassword">忘记密码</p>
         <el-form-item size="large" class="submitContainer">
-
-          <x-button @click.native="onSubmit">登录</x-button>
-
+          <x-button @click.native="onSubmit('form')">登录</x-button>
         </el-form-item>
+
         <p class="registerCon">没有账户，<a href="#/sign" class="register">去注册</a></p>
         <ul>
           <li>
@@ -41,28 +74,82 @@ export default {
     XButton
   },
   data() {
+    let validatePass = (rule, value, callback) => {
+      if (value === '') {
+        console.log('null')
+        callback(new Error('请输入密码'));
+      } else {
+        callback();
+      }
+    };
+
+    let validateEmail = (rule, value, callback) => {
+      console.log('hi')
+      let regular = /\S+@\S+\.\S+/;
+      if(value === "") {
+        callback(new Error('邮箱不能为空'))
+      } else if(value !== "" && !regular.test(value)) {
+        callback(new Error('邮箱格式不正确'))
+      }else {
+        callback();
+      }
+      
+    }
+
+
     return {
+      height: '',
+      width: '',
+      passwordType: "",
       form: {
         email: '',
         password: '',
-        vertification: ''
       },
-      height: '',
-      width: ''
+      rules: {
+        email: [
+          {
+            validator: validateEmail, trigger: ['blur','change']
+          }
+        ],
+        password: [
+          {
+            validator: validatePass, trigger: ['blur','change']
+          }
+        ],
+      }
+
     }
   },
   methods: {
-    onSubmit() {
-      this.$refs.form.validate(valid => {
+    onSubmit(formName) {
+      this.$refs[formName].validate(valid => {
         if(valid) {
           this.$store.dispatch('user/login_vuex', this.form)
             .then((data) => {
               this.$router.push({name: 'home'})
             })
+            .catch((err) => {
+              // TODO: 弹窗提示
+              // this.$refs[formName].validateField()
+            })
+        } else {
+          return false;
         }
+      })
+    },
+
+    showPwd() {
+      if (this.passwordType === 'password') {
+        this.passwordType = ''
+      } else {
+        this.passwordType = 'password'
+      }
+      this.$nextTick(() => {
+        this.$refs.password.focus()
       })
     }
   },
+
   mounted() {
     // 获取浏览器宽高   
     // this.height = document.documentElement.clientHeight

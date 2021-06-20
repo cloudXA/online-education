@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "970711",
+      "name": "eye",
+      "font_class": "eye",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "6664158",
+      "name": "eye",
+      "font_class": "eye1",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
       "icon_id": "19954259",
       "name": "收 藏 (1)",
       "font_class": "shoucang1",
