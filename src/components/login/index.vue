@@ -11,8 +11,10 @@
           <el-input v-model="form.password" placeholder="请输入密码"></el-input>
         </el-form-item>
         <p class="forgetPassword">忘记密码</p>
-        <el-form-item size="large">
-          <el-button type="primary" @click="onSubmit">登录</el-button>
+        <el-form-item size="large" class="submitContainer">
+
+          <x-button @click.native="onSubmit">登录</x-button>
+
         </el-form-item>
         <p class="registerCon">没有账户，<a href="#/sign" class="register">去注册</a></p>
         <ul>
@@ -31,7 +33,13 @@
 </template>
 
 <script>
+import XButton from '../../common/button/index.vue'
+
+
 export default {
+  components: {
+    XButton
+  },
   data() {
     return {
       form: {
@@ -97,6 +105,9 @@ export default {
     border-radius: 8px;
     border: 1px solid #979797;
 
+    .submitContainer {
+      text-align: center;
+    }
 
     & > .formTitle {
       text-align: center;
@@ -190,17 +201,17 @@ export default {
       line-height: 20px;
     }
 
-    .el-button {
-      width: 100%;
-    }
+    // .el-button {
+    //   width: 100%;
+    // }
 
-    .el-button--primary {
-      background-color: #586AEA;
-      border-color: #586AEA;
-    }
+    // .el-button--primary {
+    //   background-color: #586AEA;
+    //   border-color: #586AEA;
+    // }
 
-    .el-input__inner {
-      padding: 0 15px; 
-    }
+    // .el-input__inner {
+    //   padding: 0 15px; 
+    // }
   }
 </style>

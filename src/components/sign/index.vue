@@ -11,7 +11,8 @@
           <el-input v-model="form.password" placeholder="请输入密码"></el-input>
         </el-form-item>
         <el-form-item size="large" class="signButton">
-          <el-button type="primary" @click="onSubmit">注册</el-button>
+          <x-button @click.native="onSubmit" type="input">注册</x-button>
+
         </el-form-item>
       </el-form>
     </div>
@@ -19,7 +20,12 @@
 </template>
 
 <script>
+import XButton from '../../common/button/index.vue'
+
 export default {
+  components: {
+    XButton
+  },
   data() {
     return {
       form: {
@@ -128,7 +134,9 @@ export default {
 
     & .signButton {
       margin-top: 50px;
+      text-align: center;
     } 
+  
 
   }
 </style>
@@ -139,17 +147,17 @@ export default {
       line-height: 20px;
     }
 
-    .el-button {
-      width: 100%;
-    }
+    // .el-button {
+    //   width: 100%;
+    // }
 
-    .el-button--primary {
-      background-color: #586AEA;
-      border-color: #586AEA;
-    }
+    // .el-button--primary {
+    //   background-color: #586AEA;
+    //   border-color: #586AEA;
+    // }
 
-    .el-input__inner {
-      padding: 0 15px; 
-    }
+    // .el-input__inner {
+    //   padding: 0 15px; 
+    // }
   }
 </style>

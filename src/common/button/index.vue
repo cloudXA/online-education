@@ -38,4 +38,9 @@ export default {
     line-height: 36px;
   }
 
+  .x-button:hover {
+    color: white;
+    background: #586AEA;
+  }
+
 </style>

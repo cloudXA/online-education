@@ -4,11 +4,14 @@
       <el-tab-pane label="全部" name="first">
         <div>
           <el-row>
-            <el-button size="small" round>{{primaryNode}}</el-button>
+            <!-- <el-button size="small" round>{{primaryNode}}</el-button> -->
+            <x-button>{{primaryNode}}</x-button>
+
           </el-row>
           <hr>
           <el-row>
-            <el-button size="small" round>{{secondaryNode}}</el-button>
+            <!-- <el-button size="small" round>{{secondaryNode}}</el-button> -->
+            <x-button>{{secondaryNode}}</x-button>
           </el-row>
           <hr>
         </div>
@@ -18,7 +21,13 @@
 </template>
 
 <script>
+import XButton from '../../common/button/index.vue'
+
 export default {
+  components: {
+    XButton
+  },
+
  data() {
       return {
         activeName: 'second'

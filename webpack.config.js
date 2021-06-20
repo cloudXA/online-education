@@ -1,22 +1,36 @@
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
-  mode:'development', // 开发模式
+  mode:'production', // 生产模式
   entry: path.resolve(__dirname, './src/main.js'),
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '',
     filename: '[name].[hash:8].js'
   },
+
+  externals: {
+    vue: 'Vue',
+    'element-ui':'ELEMENT'
+  },
+
+  
   plugins: [
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, './public/index.html')
+    }),
+
+    new BundleAnalyzerPlugin({
+      analyzerHost: '127.0.0.1',
+      analyzerPort: '7000'
     })
   ],
+
   module: {
     rules: [
       {
