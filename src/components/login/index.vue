@@ -1,7 +1,10 @@
 <template>
   <div class="cont clearfix" :style="{height: height}" ref="app">
     <p class="title">爱题网</p>
-    <div class="container clearfix">
+    <div class="container clearfix"
+      v-loading='loading'
+      element-loading-background="rgba(0, 0, 1, 0.18)"
+    >
       <p class="formTitle">登录</p>
 
       <el-form 
@@ -101,6 +104,7 @@ export default {
       height: '',
       width: '',
       passwordType: "",
+      loading: false,
       form: {
         email: '',
         password: '',
@@ -123,14 +127,20 @@ export default {
   methods: {
     onSubmit(formName) {
       this.$refs[formName].validate(valid => {
+        
         if(valid) {
+          this.loading = true;
           this.$store.dispatch('user/login_vuex', this.form)
             .then((data) => {
+              this.loading = false;
               this.$router.push({name: 'home'})
             })
             .catch((err) => {
-              // TODO: 弹窗提示
-              // this.$refs[formName].validateField()
+              this.loading = false;
+              this.$message({
+                message: '密码或用户名不存在',
+                type: 'error'
+              })
             })
         } else {
           return false;

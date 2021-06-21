@@ -2,10 +2,7 @@
   <div class="container">
     <!-- 图片横幅 -->
     <div class="banner">
-      <div>
-        自信人生二百年，
-      </div>
-      <div>会当水击三千里。</div>
+      
     </div>
 
     <!-- 级联选择器 -->
@@ -105,12 +102,11 @@ export default {
 <style lang="scss">
 .container {
   background: #f8f8f8;
-  width: 1200px;
   .banner {
     cursor: pointer;
     width: 100%;
     height: 560px;
-    background-color: #cce8cf;
+    background-color: #cce5e8;
     display: flex;
     flex-direction: column;
     color: #676767;

@@ -61,6 +61,7 @@
     "lint-staged": "^10.5.4",
     "mockjs": "^1.1.0",
     "node-sass": "^4.14.1",
+    "postcss-pxtorem": "^6.0.0",
     "pubsub-js": "^1.9.3",
     "sass-loader": "^8.0.2",
     "uglifyjs-webpack-plugin": "^2.2.0",

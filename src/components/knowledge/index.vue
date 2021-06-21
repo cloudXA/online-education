@@ -81,11 +81,3 @@ export default {
   }
 }
 </script>
-
-<style scoped lang="scss">
-  .knowledeg_container {
-    width: 1200px;
-    margin: 0 auto;
-  }
-
-</style>

@@ -224,10 +224,8 @@ export default {
 
 <style lang="scss" scoped>
   .container {
-    width: 1200px;
-    margin: 0 auto;
     background: white;
-    padding: 0 20px;
+    padding: 0 70px;
   }
   .topContainer {
     display: flex;

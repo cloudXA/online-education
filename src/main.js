@@ -9,7 +9,13 @@ import request from './utils/request.js';
 Vue.prototype.$ajax = request;
 
 
-import  {Form, FormItem, Input,  Select, Option} from 'element-ui';
+import  {
+    Form, 
+    FormItem, 
+    Input,  
+    Select, 
+    Option, 
+  } from 'element-ui';
 
 import XInput from '@/common/z-input/index';
 
@@ -30,6 +36,7 @@ Vue.use(Input);
 Vue.use(Select);
 Vue.use(Option);
 Vue.use(XInput);
+
 
 Vue.use(plugins)
 

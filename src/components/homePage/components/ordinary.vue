@@ -105,10 +105,8 @@ export default {
 
 <style lang="scss" scoped>
     .container {
-        margin: 0 auto;
-        width: 1200px;
         background: #FFFFFF;
-
+        padding: 0 70px;
         .title {
             width: 400px;
             height: 63px;

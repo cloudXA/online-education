@@ -63,15 +63,16 @@ export default {
 
 <style scoped lang="scss">
   .container {
+    width: 100%;
     height: 70px;
-    background: #FFFFFF;
+    background: #e4d6d6;
     box-shadow: 6px 0px 12px 0px rgba(0, 0, 0, 0.1);
 
     .content {
       padding: 0 30px;
       & > ul {
         display: grid;
-        grid-template-columns: 305px 370px 493px;
+        grid-template-columns: 2fr 1fr 2fr;
         grid-template-rows: 70px;
         justify-items: center;
         align-items: center;
@@ -83,7 +84,6 @@ export default {
         grid-template-columns: 200px 134px;
 
         .logo {
-          width: 96px;
           height: 70px;
           line-height: 70px;
           font-size: 32px;
