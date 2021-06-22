@@ -17,7 +17,7 @@
             class="ErrorPage-errorImage"
             width="200px"
             height="200px"
-            src="/src/image/404.jpg"
+            src="../../../src/image/404.jpg"
             alt="page error"
           />
         </div>

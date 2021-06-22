@@ -110,7 +110,7 @@ export default {
         .title {
             width: 400px;
             height: 63px;
-            background: url("/src/image/title.png") 0  no-repeat;
+            background: url("../../../image/title.png") 0  no-repeat;
             text-align: center;
             font-size: 24px;
             font-weight: 500;
@@ -121,7 +121,6 @@ export default {
         }
 
         .question-area {
-            width: 1200px;
             .question {
                 padding: 17px 20px 17px 40px;
                 border-bottom: 1px solid #E5E5E5;
@@ -184,7 +183,7 @@ export default {
                                 .eye {
                                     width: 20px;
                                     height: 14px;
-                                    background: url("/src/image/eye.png");
+                                    background: url("../../../image/eye.png");
                                     display: inline-block;
                                     margin-right: 3px;
                                 }

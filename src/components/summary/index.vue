@@ -130,6 +130,7 @@ export default {
             url: `/api/exercise/${id}/?answer=${isAll}`,
             method: 'get'
           }).then(data => {
+            console.log(data, 'data resolve')
             resolve(data.data.doc)
           })
           .catch(err => {
@@ -224,20 +225,34 @@ export default {
      * isAll 
      */
     async renderData(id, isAll, userId) {
-      Promise.all([this.getExercise(id, isAll), this.getCallback(userId)])
-              .then(datas => {
-                let originExercise = datas[0];
-                let reply = datas[1].exerReply.filter(reply => {
-                  return reply.exerId === id
-                });
-                
-                if(reply.length) {
-                  this.reply = reply[0].reply[0].reply;
-                  originExercise.reply = this.reply
-                }
+      let originExercise = await this.getExercise(id, isAll);
+      let callBackExercise = await this.getCallback(userId);
 
-                this.exercise = originExercise;
-              })
+      let reply = callBackExercise.exerReply.filter(reply => {
+        return reply.exerId === id
+      });
+
+      if(reply.length) {
+        this.reply = reply[0].reply[0].reply;
+        originExercise.reply = this.reply;
+      }
+
+      this.exercise = originExercise;
+
+      // Promise.all([this.getExercise(id, isAll), this.getCallback(userId)])
+      //         .then(datas => {
+      //           let originExercise = datas[0];
+      //           let reply = datas[1].exerReply.filter(reply => {
+      //             return reply.exerId === id
+      //           });
+                
+      //           if(reply.length) {
+      //             this.reply = reply[0].reply[0].reply;
+      //             originExercise.reply = this.reply
+      //           }
+
+      //           this.exercise = originExercise;
+      //         })
               
       this.total = this.calculateExerId('length');
     },

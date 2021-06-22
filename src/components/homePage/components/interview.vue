@@ -226,7 +226,7 @@ export default {
     .title {
       width: 400px;
       height: 63px;
-      background: url("/src/image/title.png") 0  no-repeat;
+      background: url("../../../image/title.png") 0  no-repeat;
       text-align: center;
       font-size: 24px;
       font-weight: 500;
@@ -256,7 +256,7 @@ export default {
           .paper {
             width: 80px;
             height: 80px;
-            background: url("/src/image/paper.png");
+            background: url("../../../image/paper.png");
             margin-right: 24px;
           }
           .title-container {
@@ -274,7 +274,7 @@ export default {
                 .exercise-icon {
                   width: 26px;
                   height: 17px;
-                  background: url("/src/image/exercise.png");
+                  background: url("../../../image/exercise.png");
                 }
               }
               .eye-container {
@@ -283,7 +283,7 @@ export default {
                 .eye-icon {
                   width: 20px;
                   height: 14px;
-                  background: url("/src/image/eye.png");
+                  background: url("../../../image/eye.png");
                 }
               }
               

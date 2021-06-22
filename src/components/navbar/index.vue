@@ -65,7 +65,7 @@ export default {
   .container {
     width: 100%;
     height: 70px;
-    background: #e4d6d6;
+    background: #FFFFFF;
     box-shadow: 6px 0px 12px 0px rgba(0, 0, 0, 0.1);
 
     .content {
