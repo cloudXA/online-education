@@ -10,7 +10,7 @@
             href="http://localhost:8080/#/homepage"
           >
             去往首页
-          </a>
+          </a> 
         </div>
         <div class="ErrorPage-errorImageContainer">
           <img

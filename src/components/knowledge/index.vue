@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="knowledeg_container">
-      <ul class="sub-know-container">
+    <div>
+      <ul>
         <li v-for="(item, index) in renderData" :key="index">
           <exercise
               :render="item"
@@ -81,3 +81,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .knowledeg_containers {
+    .sub-know-containers {
+      
+    }
+  }
+</style>

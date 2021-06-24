@@ -1,6 +1,5 @@
 <template>
   <div class="cont clearfix" :style="{height: height}" ref="app">
-    <p class="title">爱题网</p>
     <div class="container clearfix"
       v-loading='loading'
       element-loading-background="rgba(0, 0, 1, 0.18)"
@@ -41,7 +40,7 @@
           >
           </el-input>
 
-          <span class="show-pwd" @click="showPwd">
+          <span class="show-pwd" @click.stop="showPwd">
             <i class="iconfont icon-eye" :class="passwordType === 'password' ? 'icon-eye1' : 'icon-eye'" ></i>
           </span>
         </el-form-item>
@@ -78,16 +77,17 @@ export default {
   },
   data() {
     let validatePass = (rule, value, callback) => {
+      let regular = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/;
       if (value === '') {
-        console.log('null')
         callback(new Error('请输入密码'));
+      } else if (!regular.test(value)) {
+        callback(new Error('密码必须是数字字母组合&长度咋8-16位'));
       } else {
         callback();
       }
     };
 
     let validateEmail = (rule, value, callback) => {
-      console.log('hi')
       let regular = /\S+@\S+\.\S+/;
       if(value === "") {
         callback(new Error('邮箱不能为空'))
@@ -103,7 +103,7 @@ export default {
     return {
       height: '',
       width: '',
-      passwordType: "",
+      passwordType: "password",
       loading: false,
       form: {
         email: '',
@@ -154,9 +154,6 @@ export default {
       } else {
         this.passwordType = 'password'
       }
-      this.$nextTick(() => {
-        this.$refs.password.focus()
-      })
     }
   },
 
@@ -195,6 +192,7 @@ export default {
     }
   }
   .container {
+    margin-top: 40px;
     z-index: 10;
     border: 1px solid blueviolet;
     padding: 40px 82px 37px 78px;
@@ -289,6 +287,12 @@ export default {
 
 
     }
+
+    .show-pwd {
+      position: absolute;
+      top: 2px;
+      right: 30px;
+    }
   }
 </style>
 
@@ -298,17 +302,5 @@ export default {
       line-height: 20px;
     }
 
-    // .el-button {
-    //   width: 100%;
-    // }
-
-    // .el-button--primary {
-    //   background-color: #586AEA;
-    //   border-color: #586AEA;
-    // }
-
-    // .el-input__inner {
-    //   padding: 0 15px; 
-    // }
   }
 </style>

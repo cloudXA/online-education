@@ -1,6 +1,5 @@
 <template>
   <div class="cont clearfix" :style="{'height': height}" ref="app">
-    <p class="title">爱题网</p>
     <div class="container clearfix" 
           v-loading='loading'
           element-loading-background="rgba(0, 0, 1, 0.18)">
@@ -60,16 +59,17 @@ export default {
   },
   data() {
     let validatePass = (rule, value, callback) => {
+      let regular = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/;
       if (value === '') {
-        console.log('null')
         callback(new Error('请输入密码'));
+      } else if (!regular.test(value)) {
+        callback(new Error('密码必须是数字、字母组合&长度咋8-16位'));
       } else {
         callback();
       }
     };
 
     let validateEmail = (rule, value, callback) => {
-      console.log('hi')
       let regular = /\S+@\S+\.\S+/;
       if(value === "") {
         callback(new Error('邮箱不能为空'))
@@ -88,7 +88,7 @@ export default {
         password: '',
       },
       height: '',
-      passwordType: "",
+      passwordType: "password",
       loading: false,
       rules: {
         email: [
@@ -172,6 +172,7 @@ export default {
     }
   }
   .container {
+    margin-top: 40px;
     z-index: 10;
     border: 1px solid blueviolet;
     width: 520px;
@@ -226,7 +227,12 @@ export default {
       margin-top: 50px;
       text-align: center;
     } 
-  
+
+    .show-pwd {
+      position: absolute;
+      top: 2px;
+      right: 30px;
+    }
 
   }
 </style>
@@ -237,17 +243,5 @@ export default {
       line-height: 20px;
     }
 
-    // .el-button {
-    //   width: 100%;
-    // }
-
-    // .el-button--primary {
-    //   background-color: #586AEA;
-    //   border-color: #586AEA;
-    // }
-
-    // .el-input__inner {
-    //   padding: 0 15px; 
-    // }
   }
 </style>

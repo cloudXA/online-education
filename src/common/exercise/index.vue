@@ -304,7 +304,8 @@ export default {
   .knowledeg_container {
     .sub-know-container {
       display: grid;
-      grid-template-columns: repeat(1, 1200px);
+      padding-left: 50px;
+      padding-right: 50px;
       row-gap: 20px; 
       & > li {
         padding: 20px;

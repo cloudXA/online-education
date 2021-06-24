@@ -3,13 +3,12 @@ const webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-require("babel-polyfill");
+require("@babel/polyfill");
 
 
 module.exports = {
   mode:'production', // 生产模式
-  entry: ["babel-polyfill", "./src/main.js"],
-  // entry: path.resolve(__dirname, "babel-polyfill", './src/main.js'),
+  entry: path.resolve(__dirname, './src/main.js'),
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '',
@@ -87,6 +86,7 @@ module.exports = {
         },
         exclude: /node_modules/ 
       },
+
       {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'file-loader',

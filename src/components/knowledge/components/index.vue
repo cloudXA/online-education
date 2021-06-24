@@ -1,6 +1,6 @@
 <template>
-  <div class="knowledeg_container">
-    <ul class="sub-know-container">
+  <div class="knowledeg">
+    <ul class="subKnow">
       <li v-for="(item, index) in renderData" :key="index">
         <span :class="[propertyMapType[item.property], 'property']">{{propertyMap[item.property]}}</span>
         <span class="serial">{{index + 1}}、</span>
@@ -142,14 +142,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .knowledeg_container {
-    .sub-know-container {
+  .knowledeg {
+    border: 1px solid pink;
+    .subKnow {
+      border: 1px solid red;
       display: grid;
-      grid-template-columns: repeat(1, 1200px);
       row-gap: 20px; 
       & > li {
         padding: 20px;
-        background: #ffffff;
+        background: #6b0000;
         .property {
           display: inline-block;
           width: 51px;
