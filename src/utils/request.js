@@ -4,8 +4,8 @@ import token from './auth';
 
 // 创建axios实例
 const service = axios.create({
-  // baseURL: "http://8.129.106.56/",
-  baseURL: "http://localhost:5000/",
+  baseURL: "http://8.129.106.56/",
+  // baseURL: "http://localhost:5000/",
   timeout: 5000
 });
 

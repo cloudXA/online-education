@@ -47,6 +47,9 @@
         </el-form-item>
       </el-form>
     </div>
+     <a href="https://beian.miit.gov.cn/" target="_blank" class="beian">
+                        备案号: 皖ICP备2021008954号-1                    
+                    </a>
   </div>  
 </template>
 
@@ -170,6 +173,13 @@ export default {
       margin: 30px 0;
 
     }
+    .beian {
+      text-decoration: none;
+      color: #ffff;
+      position: fixed;
+      bottom: 10px;
+    }
+    
   }
   .container {
     margin-top: 40px;

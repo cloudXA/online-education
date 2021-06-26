@@ -6,6 +6,11 @@
                 <li>我的文章</li>
                 <li>联系我</li>
                 <li>关于我</li>
+                <li>
+                    <a href="https://beian.miit.gov.cn/" target="_blank" class="beian">
+                        备案号: 皖ICP备2021008954号-1                    
+                    </a>
+                </li>
             </ul>
         </div>
         <div class="qrCode">
@@ -57,7 +62,11 @@ export default {
                     margin-right: 21px;
                     cursor: pointer;
                 }
-                
+                .beian {
+                    color: #ffff;
+                    cursor: pointer;
+                    text-decoration: none;
+                }
             }
         }
 
