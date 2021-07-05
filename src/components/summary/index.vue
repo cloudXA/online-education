@@ -1,7 +1,6 @@
 <template>
   <div class="cont">
     <nav-bar></nav-bar>
-
     <subject 
       :exercise="exercise" 
       :total="total" 
@@ -12,7 +11,7 @@
     >
     </subject>
 
-    <div class="footer" @click="handleClick">
+    <div class="footer-button" @click="handleClick">
       <x-button 
           class="last"
           v-if="exerciseIndex !== 1" 
@@ -47,6 +46,9 @@
         返回
       </x-button>
     </div>
+
+    <footer-area></footer-area>
+
     
   </div>  
 </template>
@@ -56,6 +58,7 @@ import NavBar from '../navbar/index';
 import Subject from './components/subject';
 import XButton from '@/common/button/index.vue'
 import tokenInstance from '@/utils/auth';
+
 
 export default {
   name: 'Summary',
@@ -95,7 +98,10 @@ export default {
   watch: {
     exerId(newVal) {
       let idList = this.calculateExerId('content');
-      this.exerciseIndex = idList.indexOf(newVal) + 1;
+      this.$nextTick(() => {
+        this.exerciseIndex = idList.indexOf(newVal) + 1;
+      })
+      
     },
     reply(newVal) {
       this.$set(this.exercise, 'reply', newVal);
@@ -239,21 +245,6 @@ export default {
 
       this.exercise = originExercise;
 
-      // Promise.all([this.getExercise(id, isAll), this.getCallback(userId)])
-      //         .then(datas => {
-      //           let originExercise = datas[0];
-      //           let reply = datas[1].exerReply.filter(reply => {
-      //             return reply.exerId === id
-      //           });
-                
-      //           if(reply.length) {
-      //             this.reply = reply[0].reply[0].reply;
-      //             originExercise.reply = this.reply
-      //           }
-
-      //           this.exercise = originExercise;
-      //         })
-              
       this.total = this.calculateExerId('length');
     },
 
@@ -283,13 +274,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .sub-container,.footer {
-    width: 1200px;
-    margin: 0 auto;
-  }
-  .footer {
+  
+  .footer-button {
     display: flex;
     justify-content: center;
+    margin: 30px 0;
   }
   .last {
     margin-right: 20px;

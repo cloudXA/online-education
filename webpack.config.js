@@ -30,7 +30,9 @@ module.exports = {
     new BundleAnalyzerPlugin({
       analyzerHost: '127.0.0.1',
       analyzerPort: '7000'
-    })
+    }),
+
+    
   ],
 
   module: {
@@ -98,8 +100,17 @@ module.exports = {
         test: /\.(ttf|eot|svg|woff|woff2)$/,
         loader: 'url-loader'
       },
+      {
+        test: /\.ext$/,
+        use: [
+          'cache-loader',
+          
+        ],
+        include: path.resolve(__dirname, 'src')
+      }
     ]
   },
+
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src')
@@ -107,10 +118,9 @@ module.exports = {
     extensions: ['*', '.js', '.vue', '.json']
   },
   devServer: {
-    historyApiFallback: true,
-    noInfo: true,
-    overlay: true
+    contentBase: './dist',
   },
+
   performance: {
     hints: false
   },

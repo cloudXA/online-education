@@ -5,8 +5,8 @@
                 <span v-if="isTag" :class="[propertyMapType[localRender.property], 'property']">
                   {{propertyMap[localRender.property]}}
                 </span>
-
-                <span class="serial">{{ serial }}、</span>
+                
+                <span class="serial" v-if="Object.keys(localRender).length !== 0">{{ serial }}、</span>
 
                 <span class="title">{{ localRender.title }}</span>
              

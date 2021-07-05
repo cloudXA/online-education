@@ -1,24 +1,24 @@
 <template>
     <div>
-        <div>
-            <header>
-                <ul class="header">
+        <div v-if="Object.keys(exercise).length !== 0">
+            <header class="header-container">
+                <ul class="header-title">
                     <li :class="calculateMap(exercise, 'class')">
                         {{calculateMap(exercise, 'name')}}
                     </li>
-                    <li>
-                        <ul class="icon-container">
-                            <li class="icon">
-                                <i class="iconfont icon-shoucang1" 
-                                :class="{isActive: calculateMap(exercise, 'isCollect')}"></i>
-                            </li>
-                            <li class="statis">
-                                <span>{{ order }}/</span>
-                                <span>{{ total }}</span>
-                            </li>
-                        </ul>
+                </ul>
+
+                <ul class="icon-container">
+                    <li class="icon">
+                        <i class="iconfont icon-shoucang1" 
+                        :class="{isActive: calculateMap(exercise, 'isCollect')}"></i>
+                    </li>
+                    <li class="statis">
+                        <span>{{ order }}/</span>
+                        <span>{{ total }}</span>
                     </li>
                 </ul>
+
             </header>
             <main>
                 <exercise 
@@ -32,7 +32,6 @@
             </main>
             
         </div>
-        <div></div>
 
     </div>
 </template>
@@ -110,51 +109,54 @@ export default {
 </script>
 
 <style  scoped lang="scss">
-    .header {
+    .header-container {
         display: flex;
-        justify-content: flex-end;
+        justify-content: center;
         align-items: baseline;
-        margin-right: 40px;
-        margin-top: 40px;
-        .single {
-            width: 240px;
-            height: 30px;
-            background: url("../../../image/single.png");
-            text-align: center;
-            line-height: 30px;
+        margin: 20px 0;
+        .header-title {
+            display: flex;
+            justify-content: flex-end;
+            .single {
+                width: 240px;
+                height: 30px;
+                background: url("../../../image/single.png");
+                text-align: center;
+                line-height: 30px;
 
-        } 
-        .double {
-            width: 240px;
-            height: 30px;
-            background: url("../../../image/double.png");
-            text-align: center;
-            line-height: 30px;
+            } 
+            .double {
+                width: 240px;
+                height: 30px;
+                background: url("../../../image/double.png");
+                text-align: center;
+                line-height: 30px;
 
-        }
-        .judge {
-            width: 240px;
-            height: 30px;
-            background: url("../../../image/judge.png");
-            text-align: center;
-            line-height: 30px;
+            }
+            .judge {
+                width: 240px;
+                height: 30px;
+                background: url("../../../image/judge.png");
+                text-align: center;
+                line-height: 30px;
 
-        }
-        .short-answer {
-            width: 240px;
-            height: 30px;
-            background: url("../../../image/short.png");
-            text-align: center;
-            line-height: 30px;
+            }
+            .short-answer {
+                width: 240px;
+                height: 30px;
+                background: url("../../../image/short.png");
+                text-align: center;
+                line-height: 30px;
 
-        }
-        & > li:nth-child(2) {
-            margin-left: 368px;
+            }
+            
         }
 
         .icon-container {
             display: flex;
             align-items: baseline;
+            position: absolute;
+            right: 5%;
             .icon {
                 width: 36px;
                 height: 36px;
@@ -172,5 +174,6 @@ export default {
             }
         }
     }
+        
     
 </style>

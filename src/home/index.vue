@@ -42,6 +42,15 @@ export default {
       return mapName
     }
   },
+  created() {
+    this.$ajax({
+      url: '/api/goodslist',
+      method: 'get',
+    })
+    .then(data => {
+      console.log(data, 'from mock')
+    })
+  }
   
 }
 </script>
